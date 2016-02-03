@@ -1,6 +1,12 @@
 # Exads
 
-**TODO: Add description**
+*Algorithms and Data Structures Collection in Elixir*
+
+This is a library with a collection of some of the most used and well known
+algorithms and data structures. 
+
+Find the algorithms inside Exads.Algos and data structures inside 
+Exads.DataStructures
 
 ## Installation
 
@@ -15,3 +21,14 @@
         def application do
           [applications: [:exads]]
         end
+
+## TODO
+
+### Data Structures
++ Stack
++ Queue
++ Tree
++ Red Black Tree
+
+### Algorithms
++ Binary Search
