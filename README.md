@@ -29,6 +29,11 @@ Exads.DataStructures
 + Queue
 + Tree
 + Red Black Tree
++ Graph
++ Priority Queue
 
 ### Algorithms
 + Binary Search
++ Breadth-First Search
++ Depth-First Search
++ Brute-Force Search
