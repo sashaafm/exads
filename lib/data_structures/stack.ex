@@ -24,7 +24,7 @@ defmodule Exads.DataStructures.Stack do
 	Pops the top element from the stack returning a tuple with the format
 	{element, new_list}
 	"""
-	@spec pop(list(any())) :: tuple(any(), list(any()))
+	@spec pop(list(any())) :: tuple()
 
 	def pop([]), do: nil
 	def pop([head | tail] = _stack) do
@@ -83,7 +83,8 @@ defmodule Exads.DataStructures.Stack do
 
 	@doc """
 	Returns the position in the stack of a given element. Returns -1 if the
-	element is not present.
+	element is not present. If the element appears more than once, then the 
+	first occurrence is considered.
 	"""
 	@spec position(list(any()), any()) :: integer
 
@@ -120,5 +121,12 @@ defmodule Exads.DataStructures.Stack do
 			mto tail, elem
 		end
 	end
+
+	@doc """
+	Returns the size of the stack.
+	"""
+	@spec size(list(any())) :: pos_integer()
+
+	def size(stack), do: length(stack)
 
 end
