@@ -27,10 +27,11 @@ Exads.DataStructures
 ### Data Structures
 + [x] Stack
 + [x] Queue
++ [ ] Priority Queue
 + [ ] Tree
 + [ ] Red Black Tree
 + [ ] Graph
-+ [ ] Priority Queue
+
 
 ### Algorithms
 + [ ] Binary Search
