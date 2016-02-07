@@ -25,6 +25,7 @@ defmodule Exads.DataStructures.Queue do
 	"""
 	@spec dequeue(list(any())) :: tuple()
 
+	def dequeue([]), do: {nil, []}
 	def dequeue([head | tail]) do 
 		{head, tail}
 	end
@@ -34,6 +35,7 @@ defmodule Exads.DataStructures.Queue do
 	"""
 	@spec delete(list(any())) :: list(any())
 
+	def delete([]), do: []
 	def delete([head | tail]), do: tail
 
 	@doc """
@@ -48,6 +50,7 @@ defmodule Exads.DataStructures.Queue do
 	"""
 	@spec first(list(any())) :: any() | nil
 
+	def first([]), do: nil
 	def first([head | tail]), do: head
 
 	@doc """

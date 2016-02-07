@@ -25,15 +25,15 @@ Exads.DataStructures
 ## TODO
 
 ### Data Structures
-+ Stack
-+ Queue
-+ Tree
-+ Red Black Tree
-+ Graph
-+ Priority Queue
++ [x] Stack
++ [x] Queue
++ [ ] Tree
++ [ ] Red Black Tree
++ [ ] Graph
++ [ ] Priority Queue
 
 ### Algorithms
-+ Binary Search
-+ Breadth-First Search
-+ Depth-First Search
-+ Brute-Force Search
++ [ ] Binary Search
++ [ ] Breadth-First Search
++ [ ] Depth-First Search
++ [ ] Brute-Force Search
