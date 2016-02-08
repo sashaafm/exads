@@ -83,6 +83,14 @@ defmodule PriorityQueueTest do
   	assert Q.member?([3, 6, 2, 4], 9) == false
   end
 
+  test "position_by_order with empty queue" do 
+    assert Q.position_by_order([], {:a, 4}) == -1
+  end
+
+  test "position_by_order with non-empty queue and member elem" do 
+    assert Q.position_by_order([{:a, 4}, {:b, 8}, {:c, 2}]) == 2
+  end
+
   test "more_than_once wih empty queue" do 
   	assert Q.more_than_once([], 1) == false
   end
