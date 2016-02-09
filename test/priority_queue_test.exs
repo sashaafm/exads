@@ -17,7 +17,7 @@ defmodule PriorityQueueTest do
   end
 
   test "get_frontmost_element from empty queue" do 
-  	assert Q.get_frontmost_element([]) == {nil, []}
+  	assert Q.get_frontmost_element([]) == nil
   end
 
   test "get_frontmost_element from non-empty queue" do 
@@ -25,13 +25,13 @@ defmodule PriorityQueueTest do
       == {{:b, 5}, [{:a, 2}, {:c, 3}]}
   end
 
-  test "get_frontmost_element from non-empty queue with duplicate elem" do 
+  test "get_frontmost_element from non-empty queue with duplicate prio" do 
     assert Q.get_frontmost_element([{:a, 2}, {:d, 5}, {:b, 5}, {:c, 3}]) 
       == {{:d, 5}, [{:a, 2}, {:b, 5}, {:c, 3}]}
   end  
 
   test "get_frontmost_element from non-empty queue with one elem" do 
-  	assert Q.get_frontmost_element([1]) == {1, []}
+  	assert Q.get_frontmost_element([{:a, 5}]) == {{:a, 5}, []}
   end
 
   test "delete from empty queue" do 
@@ -67,8 +67,16 @@ defmodule PriorityQueueTest do
   	assert Q.front([{:a, 3}, {:b, 2}, {:b, 9}]) == {:b, 9}
   end
 
-  test "front with wrong type" do 
-  	assert_raise FunctionClauseError, fn -> Q.front({:a, :b}) end
+  test "front with non-empty queue and duplicate prio" do 
+    assert Q.front([{:b, 9}, {:a, 3}, {:b, 2}, {:b, 9}]) == {:b, 9}
+  end
+
+  test "front with non-empty queue and triple prio" do 
+    assert Q.front([{:b, 9}, {:a, 3}, {:b, 2}, {:b, 13}]) == {:b, 13}
+  end  
+
+  test "front without enumerable" do 
+  	assert_raise Protocol.UndefinedError, fn -> Q.front(1337) end
   end
 
   test "member? with empty queue" do 
@@ -88,7 +96,7 @@ defmodule PriorityQueueTest do
   end
 
   test "position_by_order with non-empty queue and member elem" do 
-    assert Q.position_by_order([{:a, 4}, {:b, 8}, {:c, 2}]) == 2
+    assert Q.position_by_order([{:a, 4}, {:b, 8}, {:c, 2}], {:b, 8}) == 2
   end
 
   test "more_than_once wih empty queue" do 

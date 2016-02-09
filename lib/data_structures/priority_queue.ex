@@ -2,7 +2,8 @@ defmodule Exads.DataStructures.PriorityQueue do
 
 	@moduledoc """
 	An implementation of the Priority Queue data structure with list and 
-	tuples. The priority is set by integers.
+	tuples. The priority is recommended to be set by integers, but may be set
+	using any type (evaluation will be done using Erlang's order system).
 	"""
 
 	@doc """
@@ -17,7 +18,7 @@ defmodule Exads.DataStructures.PriorityQueue do
 	"""
 	@spec insert_with_priority(list(tuple()), tuple()) :: list(tuple())
 
-	def insert_with_priority(queue, {_item, prio} = elem) when is_integer(prio) do 
+	def insert_with_priority(queue, {_item, _prio} = elem) do 
 		queue ++ [elem]
 	end
 
@@ -28,7 +29,7 @@ defmodule Exads.DataStructures.PriorityQueue do
 	@spec get_frontmost_element(list(tuple())) :: {tuple(), list(tuple())}
 
 	def get_frontmost_element(queue) do 
-		gfe queue, nil, []
+		gfe queue
 	end
 
 	@doc """
@@ -49,23 +50,22 @@ defmodule Exads.DataStructures.PriorityQueue do
 	@doc """
 	Returns the element that is next up without removing it.
 	"""
-	@spec front(list(tuple())) :: list(tuple()) | nil
+	@spec front(list(tuple())) :: tuple() | nil
 
 	def front([]), do: nil
 	def front(queue) do 
-		{result, _} = gfe queue, nil, []
+		{result, _} = gfe queue
 		result
 	end
 
-	defp gfe([head | []], front, new_queue), do: {front, new_queue}
-	defp gfe([{_h_item, h_prio} = head | tail], front, new_queue) do 
-		{tail_head_item, tail_head_prio} = List.first tail
+	defp gfe([]), do: nil
+	defp gfe(queue) do 
+		{_, front_elem} = queue
+											|> Enum.group_by(fn {_, prio} -> prio end)
+											|> Map.to_list
+											|> List.last
 
-		if h_prio >= tail_head_prio do 
-			gfe tail, head, {tail_head_item, tail_head_prio}
-		else
-			gfe tail, {tail_head_item, tail_head_prio}, new_queue
-		end
+		{List.last(front_elem), queue -- [List.last(front_elem)]}
 	end
 
 	@doc """
@@ -106,7 +106,7 @@ defmodule Exads.DataStructures.PriorityQueue do
 		find_elem_by_priority queue, elem, 1
 	end
 
-	defp find_elem_by_priority([], _, _) do -1
+	defp find_elem_by_priority([], _, _), do: -1
 	defp find_elem_by_priority([_head | tail] = queue, elem, count) do 
 		if elem == front(queue) do 
 			count
@@ -143,4 +143,19 @@ defmodule Exads.DataStructures.PriorityQueue do
 
 	def size(queue), do: length queue
 
+	@doc """
+	Increases the priority of a given element in the queue, if the new priority
+	is at least as large as the old one.
+	"""
+	@spec increase_element_priority(list(tuple()), tuple(), any()) :: list(tuple()) | []
+
+	def increase_element_priority([], _, _), do: []
+	def increase_element_priority(queue, {item, prio} = elem, new_prio) 
+																										when new_prio >= prio do
+		pos 			 = position_by_order queue, elem 
+		first_half = (queue |> Enum.take(pos)) -- [elem]
+		sec_half 	 = queue 	|> Enum.slice(pos, length(queue))
+
+		first_half ++ [{item, new_prio}] ++ sec_half
+	end
 end
