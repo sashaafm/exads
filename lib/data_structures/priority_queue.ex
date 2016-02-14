@@ -1,4 +1,4 @@
-defmodule Exads.DataStructures.PriorityQueue do
+defmodule PriorityQueue do
 
 	@moduledoc """
 	An implementation of the Priority Queue data structure with list and 

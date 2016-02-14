@@ -1,4 +1,4 @@
-defmodule Exads.DataStructures.Queue do
+defmodule Queue do
 
 	@moduledoc """
 	An implmentation of the Queue data structure with lists.

@@ -1,4 +1,4 @@
-defmodule Exads.DataStructures.Stack do
+defmodule Stack do
 
 	@moduledoc """
 	An implementation of the Stack data structure with lists.
