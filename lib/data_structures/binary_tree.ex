@@ -13,7 +13,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	@spec new(any) :: %{}
 
 	def new(value) do 
-		%__MODULE__{value: value, left: nil, right: nil}
+		%{value: value, left: nil, right: nil}
 	end
 
 	@doc """
@@ -22,11 +22,11 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	@spec insert(%{} | nil, any) :: %{}
 
 	def insert(nil, node_value), do: new node_value
-	def insert(%__MODULE__{value: value, left: left, right: right}, node_value) do 
+	def insert(%{value: value, left: left, right: right}, node_value) do 
 		if node_value < value do 
-			%__MODULE__{value: value, left: insert(left, node_value), right: right}
+			%{value: value, left: insert(left, node_value), right: right}
 		else
-			%__MODULE__{value: value, left: left, right: insert(right, node_value)}
+			%{value: value, left: left, right: insert(right, node_value)}
 		end
 	end
 
@@ -48,24 +48,24 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		cond do 
 			tree.value == node_value -> del(tree)
 			tree.value <  node_value -> 
-				%__MODULE__{left: tree.left, 
+				%{left: tree.left, 
 										value: tree.value, 
 										right: delete(tree.right, node_value)}
 			tree.value > node_value ->
-				%__MODULE__{left: delete(tree.left,node_value),
+				%{left: delete(tree.left,node_value),
 										value: tree.value, 
 										right: tree.right}
 		end
 	end
 
-	defp del(%__MODULE__{left: nil,  value: _, right: right}), do: right
-	defp del(%__MODULE__{left: left, value: _, right: nil}),   do: left
-	defp del(%__MODULE__{left: left, value: _, right: right}) do 
-		%__MODULE__{left: left, value: min(right), right: delete(right, min(right))}
+	defp del(%{left: nil,  value: _, right: right}), do: right
+	defp del(%{left: left, value: _, right: nil}),   do: left
+	defp del(%{left: left, value: _, right: right}) do 
+		%{left: left, value: min(right), right: delete(right, min(right))}
 	end
 
-	defp min(%__MODULE__{left: nil,  value: val, right: _}), do: val
-	defp min(%__MODULE__{left: left, value: _,   right: _}), do: min left
+	defp min(%{left: nil,  value: val, right: _}), do: val
+	defp min(%{left: left, value: _,   right: _}), do: min left
 
 
 	@doc """
@@ -75,7 +75,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	@spec find_node(%{}, any) :: %{} | nil
 
 	def find_node(nil, _), do: nil
-	def find_node(node = %__MODULE__{value: node_value, left: _, right: _}, 
+	def find_node(node = %{value: node_value, left: _, right: _}, 
 																	 node_value) do 
 		node
 	end
@@ -112,7 +112,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	def node_depth(tree, node_value), do: nd tree, node_value, 0
 
 	defp nd(nil, _, _), do: -1
-	defp nd(%__MODULE__{value: node_value, left: _, right: _}, 
+	defp nd(%{value: node_value, left: _, right: _}, 
 								 node_value, depth), do: depth
 	defp nd(tree_node, node_value, depth) do
  		if node_value < tree_node.value do 
@@ -138,7 +138,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	end
 
 	defp th(nil, _), do: []
-	defp th(%__MODULE__{value: val, left: nil, right: nil}, h), do: [{val, h}]
+	defp th(%{value: val, left: nil, right: nil}, h), do: [{val, h}]
 	defp th(tree_node, h) do
 		[{tree_node.value, h}] ++ th(tree_node.left, h + 1) ++ th(tree_node.right, h + 1)
 	end
@@ -157,7 +157,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	end
 
 	defp dfs(nil, _), do: []
-	defp dfs(%__MODULE__{value: val, left: nil, right: nil}, _), do: [val]
+	defp dfs(%{value: val, left: nil, right: nil}, _), do: [val]
 	defp dfs(tree_node, order) do
 		case order do
 		  :pre_order 	->
@@ -180,19 +180,19 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		bfs(tree)
 	end
 
-	defp bfs(%__MODULE__{value: val, left: nil, right: nil}) do 
+	defp bfs(%{value: val, left: nil, right: nil}) do 
 		[val]
 	end
 
-	defp bfs(%__MODULE__{value: val, left: nil, right: right}) do 
+	defp bfs(%{value: val, left: nil, right: right}) do 
 		[val] ++ bfs(right)
 	end
 
-	defp bfs(%__MODULE__{value: val, left: left, right: nil}) do 
+	defp bfs(%{value: val, left: left, right: nil}) do 
 		[val] ++ bfs(left)
 	end
 
-	defp bfs(%__MODULE__{value: val, left: left, right: right}) do 
+	defp bfs(%{value: val, left: left, right: right}) do 
 		[val] ++ bfs(left) ++ bfs(right)
 	end
 
@@ -207,7 +207,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	end
 
 	defp e(nil, _), do: false
-	defp e(%__MODULE__{value: node_value, left: _, right: _}, node_value), do: true
+	defp e(%{value: node_value, left: _, right: _}, node_value), do: true
 	defp e(tree_node, node_value) do
  		if node_value < tree_node.value do 
  			e tree_node.left, node_value
