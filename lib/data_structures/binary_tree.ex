@@ -5,7 +5,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	using Struct.
 	"""
 
-	defstruct value: nil, left: nil, right: nil
+	defstruct value: :leaf, left: :leaf, right: :leaf
 	
 	@doc """
 	Creates a new Binary Search Tree with the root's value as the given 'value'.
@@ -13,15 +13,15 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	@spec new(any) :: %{}
 
 	def new(value) do 
-		%{value: value, left: nil, right: nil}
+		%{value: value, left: :leaf, right: :leaf}
 	end
 
 	@doc """
 	Creates and inserts a node with its value as 'node_value' into the tree.
 	"""
-	@spec insert(%{} | nil, any) :: %{}
+	@spec insert(%{} | :leaf, any) :: %{}
 
-	def insert(nil, node_value), do: new node_value
+	def insert(:leaf, node_value), do: new node_value
 	def insert(%{value: value, left: left, right: right}, node_value) do 
 		if node_value < value do 
 			%{value: value, left: insert(left, node_value), right: right}
@@ -31,16 +31,16 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	end
 
 	@doc """
-	Removes a node with 'node_value' from the given 'tree'. Returns nil if the
+	Removes a node with 'node_value' from the given 'tree'. Returns :leaf if the
 	node does not exist.
 	"""
-	@spec delete_node(%{}, any) :: %{} | nil
+	@spec delete_node(%{}, any) :: %{} | :leaf
 
 	def delete_node(tree, node_value) do 
 		if exists?(tree, node_value) do 
 			delete tree, node_value
 		else
-			nil
+			:leaf
 		end
 	end
 
@@ -58,23 +58,23 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		end
 	end
 
-	defp del(%{left: nil,  value: _, right: right}), do: right
-	defp del(%{left: left, value: _, right: nil}),   do: left
+	defp del(%{left: :leaf,  value: _, right: right}), do: right
+	defp del(%{left: left, value: _, right: :leaf}),   do: left
 	defp del(%{left: left, value: _, right: right}) do 
 		%{left: left, value: min(right), right: delete(right, min(right))}
 	end
 
-	defp min(%{left: nil,  value: val, right: _}), do: val
+	defp min(%{left: :leaf,  value: val, right: _}), do: val
 	defp min(%{left: left, value: _,   right: _}), do: min left
 
 
 	@doc """
-	Finds the node with the provided 'node_value' or nil if it does not 
+	Finds the node with the provided 'node_value' or :leaf if it does not 
 	exist in the tree.
 	"""
-	@spec find_node(%{}, any) :: %{} | nil
+	@spec find_node(%{}, any) :: %{} | :leaf
 
-	def find_node(nil, _), do: nil
+	def find_node(:leaf, _), do: :leaf
 	def find_node(node = %{value: node_value, left: _, right: _}, 
 																	 node_value) do 
 		node
@@ -88,12 +88,12 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		end
 	end
 
-	def find_parent(nil, _), do: nil
+	def find_parent(:leaf, _), do: :leaf
 	def find_parent(node, node_value) do 
-		if node.left != nil && node.left.value == node_value do 
+		if node.left != :leaf && node.left.value == node_value do 
 			node
 		end
-		if node.right != nil && node.right.value == node_value do 
+		if node.right != :leaf && node.right.value == node_value do 
 			node
 		else
 			if node_value < node.value do 
@@ -107,11 +107,11 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	@doc """
 	Finds the depth of the node with the given 'node_value'.
 	"""
-	@spec node_depth(%{} | nil, any) :: integer
+	@spec node_depth(%{} | :leaf, any) :: integer
 
 	def node_depth(tree, node_value), do: nd tree, node_value, 0
 
-	defp nd(nil, _, _), do: -1
+	defp nd(:leaf, _, _), do: -1
 	defp nd(%{value: node_value, left: _, right: _}, 
 								 node_value, depth), do: depth
 	defp nd(tree_node, node_value, depth) do
@@ -137,8 +137,8 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		|> List.first
 	end
 
-	defp th(nil, _), do: []
-	defp th(%{value: val, left: nil, right: nil}, h), do: [{val, h}]
+	defp th(:leaf, _), do: []
+	defp th(%{value: val, left: :leaf, right: :leaf}, h), do: [{val, h}]
 	defp th(tree_node, h) do
 		[{tree_node.value, h}] ++ th(tree_node.left, h + 1) ++ th(tree_node.right, h + 1)
 	end
@@ -156,8 +156,8 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		dfs tree, order
 	end
 
-	defp dfs(nil, _), do: []
-	defp dfs(%{value: val, left: nil, right: nil}, _), do: [val]
+	defp dfs(:leaf, _), do: []
+	defp dfs(%{value: val, left: :leaf, right: :leaf}, _), do: [val]
 	defp dfs(tree_node, order) do
 		case order do
 		  :pre_order 	->
@@ -180,15 +180,15 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		bfs(tree)
 	end
 
-	defp bfs(%{value: val, left: nil, right: nil}) do 
+	defp bfs(%{value: val, left: :leaf, right: :leaf}) do 
 		[val]
 	end
 
-	defp bfs(%{value: val, left: nil, right: right}) do 
+	defp bfs(%{value: val, left: :leaf, right: right}) do 
 		[val] ++ bfs(right)
 	end
 
-	defp bfs(%{value: val, left: left, right: nil}) do 
+	defp bfs(%{value: val, left: left, right: :leaf}) do 
 		[val] ++ bfs(left)
 	end
 
@@ -206,7 +206,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		e tree, node_value
 	end
 
-	defp e(nil, _), do: false
+	defp e(:leaf, _), do: false
 	defp e(%{value: node_value, left: _, right: _}, node_value), do: true
 	defp e(tree_node, node_value) do
  		if node_value < tree_node.value do 
@@ -226,7 +226,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		d tree, node_value, 0
 	end
 
-	defp d(nil, _, count), do: count
+	defp d(:leaf, _, count), do: count
 	defp d(tree_node, node_value, count) do
  		if node_value < tree_node.value do 
  			d tree_node.left, node_value, count

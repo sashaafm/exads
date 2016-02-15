@@ -4,6 +4,7 @@
               {applications,[kernel,stdlib,elixir,logger]},
               {vsn,"0.0.1"},
               {modules,['Elixir.Exads',
+                        'Elixir.Exads.DataStructures.BinarySearchTree',
                         'Elixir.Exads.DataStructures.PriorityQueue',
                         'Elixir.Exads.DataStructures.Queue',
                         'Elixir.Exads.DataStructures.Stack']}]}.
