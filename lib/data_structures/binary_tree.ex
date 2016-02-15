@@ -1,4 +1,4 @@
-defmodule BinarySearchTree do
+defmodule Exads.DataStructures.BinarySearchTree do
 
 	@moduledoc """
 	An implementation of the Binary Search Tree abstract data structure 

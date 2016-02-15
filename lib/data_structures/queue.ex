@@ -1,4 +1,4 @@
-defmodule Queue do
+defmodule Exads.DataStructures.Queue do
 
 	@moduledoc """
 	An implmentation of the Queue data structure with lists.
@@ -36,7 +36,7 @@ defmodule Queue do
 	@spec delete(list(any())) :: list(any())
 
 	def delete([]), do: []
-	def delete([head | tail]), do: tail
+	def delete([_head | tail]), do: tail
 
 	@doc """
 	Returns true if the queue is empty or false otherwise.
@@ -51,7 +51,7 @@ defmodule Queue do
 	@spec first(list(any())) :: any() | nil
 
 	def first([]), do: nil
-	def first([head | tail]), do: head
+	def first([head | _tail]), do: head
 
 	@doc """
 	Returns the maximum element in the queue using Elixir's built-in hierarchy.

@@ -1,4 +1,4 @@
-defmodule PriorityQueue do
+defmodule Exads.DataStructures.PriorityQueue do
 
 	@moduledoc """
 	An implementation of the Priority Queue data structure with list and 
@@ -38,7 +38,7 @@ defmodule PriorityQueue do
 	@spec delete(list(tuple())) :: list(tuple())
 
 	def delete([]), do: []
-	def delete([head | tail]), do: tail
+	def delete([_head | tail]), do: tail
 
 	@doc """
 	Returns true if the list is empty or false otherwise.
