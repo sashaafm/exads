@@ -2,10 +2,8 @@ defmodule Exads.DataStructures.BinarySearchTree do
 
 	@moduledoc """
 	An implementation of the Binary Search Tree abstract data structure 
-	using Struct.
+	using Map.
 	"""
-
-	defstruct value: :leaf, left: :leaf, right: :leaf
 	
 	@doc """
 	Creates a new Binary Search Tree with the root's value as the given 'value'.
@@ -34,13 +32,13 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	Removes a node with 'node_value' from the given 'tree'. Returns :leaf if the
 	node does not exist.
 	"""
-	@spec delete_node(%{}, any) :: %{} | :leaf
+	@spec delete_node(%{}, any) :: %{} | nil
 
 	def delete_node(tree, node_value) do 
 		if exists?(tree, node_value) do 
 			delete tree, node_value
 		else
-			:leaf
+			nil
 		end
 	end
 
@@ -69,12 +67,12 @@ defmodule Exads.DataStructures.BinarySearchTree do
 
 
 	@doc """
-	Finds the node with the provided 'node_value' or :leaf if it does not 
+	Finds the node with the provided 'node_value' or nil if it does not 
 	exist in the tree.
 	"""
-	@spec find_node(%{}, any) :: %{} | :leaf
+	@spec find_node(%{} | :leaf, any) :: %{} | nil
 
-	def find_node(:leaf, _), do: :leaf
+	def find_node(:leaf, _), do: nil
 	def find_node(node = %{value: node_value, left: _, right: _}, 
 																	 node_value) do 
 		node
@@ -88,7 +86,12 @@ defmodule Exads.DataStructures.BinarySearchTree do
 		end
 	end
 
-	def find_parent(:leaf, _), do: :leaf
+	@doc """
+	Finds the parent of the node with the given 'node_value'.
+	"""
+	@spec find_parent(%{} | :leaf, any) :: %{} | nil
+
+	def find_parent(:leaf, _), do: nil
 	def find_parent(node, node_value) do 
 		if node.left != :leaf && node.left.value == node_value do 
 			node
@@ -107,7 +110,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 	@doc """
 	Finds the depth of the node with the given 'node_value'.
 	"""
-	@spec node_depth(%{} | :leaf, any) :: integer
+	@spec node_depth(%{} | nil, any) :: integer
 
 	def node_depth(tree, node_value), do: nd tree, node_value, 0
 

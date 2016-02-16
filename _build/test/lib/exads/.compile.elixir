@@ -1,5 +1,29 @@
-/home/sashaafm/Documents/exads/_build/test/lib/exads/ebin/Elixir.Exads.beam	Elixir.Exads	lib/exads.ex	Elixir
-_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.PriorityQueue.beam	Elixir.Exads.DataStructures.PriorityQueue	lib/data_structures/priority_queue.ex	Elixir.Enum	Elixir.Kernel	Elixir.Kernel.Typespec	Elixir.List	Elixir.Map	Elixir.Module	erlang	maps	Elixir
-_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.BinarySearchTree.beam	Elixir.Exads.DataStructures.BinarySearchTree	lib/data_structures/binary_tree.ex	Elixir.Enum	Elixir.Kernel	Elixir.Kernel.Def	Elixir.Kernel.Typespec	Elixir.List	Elixir.Map	Elixir.Module	Elixir.Protocol	Elixir.Tuple	erlang	maps	Elixir
-_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.Queue.beam	Elixir.Exads.DataStructures.Queue	lib/data_structures/queue.ex	Elixir.Enum	Elixir.Kernel	Elixir.Kernel.Typespec	Elixir.List	Elixir.Module	erlang	Elixir
-_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.Stack.beam	Elixir.Exads.DataStructures.Stack	lib/data_structures/stack.ex	Elixir.Enum	Elixir.Kernel	Elixir.Kernel.Typespec	Elixir.List	Elixir.Module	erlang	Elixir
+v2.
+{<<"_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.Stack.beam">>,
+ 'Elixir.Exads.DataStructures.Stack',module,
+ <<"lib/data_structures/stack.ex">>,
+ ['Elixir.Kernel.Typespec','Elixir.Kernel','Elixir.Module'],
+ [erlang,'Elixir.Enum','Elixir.List'],
+ [],nil}.
+{<<"_build/test/lib/exads/ebin/Elixir.Exads.beam">>,'Elixir.Exads',module,
+ <<"lib/exads.ex">>,
+ ['Elixir.Kernel'],
+ [],[],nil}.
+{<<"_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.Queue.beam">>,
+ 'Elixir.Exads.DataStructures.Queue',module,
+ <<"lib/data_structures/queue.ex">>,
+ ['Elixir.Kernel.Typespec','Elixir.Kernel','Elixir.Module'],
+ [erlang,'Elixir.Enum','Elixir.List'],
+ [],nil}.
+{<<"_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.PriorityQueue.beam">>,
+ 'Elixir.Exads.DataStructures.PriorityQueue',module,
+ <<"lib/data_structures/priority_queue.ex">>,
+ ['Elixir.Kernel.Typespec','Elixir.Kernel','Elixir.Module'],
+ [erlang,'Elixir.Enum',maps,'Elixir.List','Elixir.Map'],
+ [],nil}.
+{<<"_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.BinarySearchTree.beam">>,
+ 'Elixir.Exads.DataStructures.BinarySearchTree',module,
+ <<"lib/data_structures/binary_tree.ex">>,
+ ['Elixir.Kernel.Typespec','Elixir.Kernel','Elixir.Module'],
+ ['Elixir.Tuple',erlang,'Elixir.Enum',maps,'Elixir.List','Elixir.Map'],
+ [],nil}.
