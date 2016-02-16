@@ -29,7 +29,7 @@ Exads.DataStructures
 + [x] Queue
 + [x] Priority Queue
 + [ ] Double-ended Queue
-+ [ ] Binary Search Tree (implemented with Map)
++ [x] Binary Search Tree (implemented with Map)
 + [ ] Binary Search Tree (implemented with Tuple)
 + [ ] Tree
 + [ ] Binary Tree
