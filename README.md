@@ -27,14 +27,23 @@ Exads.DataStructures
 ### Data Structures
 + [x] Stack
 + [x] Queue
-+ [ ] Priority Queue
++ [x] Priority Queue
++ [ ] Double-ended Queue
++ [ ] Binary Search Tree (implemented with Map)
++ [ ] Binary Search Tree (implemented with Tuple)
 + [ ] Tree
++ [ ] Binary Tree
 + [ ] Red Black Tree
-+ [ ] Graph
++ [ ] Directed Graph
++ [ ] Undirected Graph
++ [ ] Bitmap
++ [ ] Lookup Table
 
 
 ### Algorithms
 + [ ] Binary Search
-+ [ ] Breadth-First Search
-+ [ ] Depth-First Search
++ [x] Breadth-First Search for Binary Search Tree
++ [x] Depth-First Search for Binary Search Tree
++ [ ] Breadth-First Search for Graphs
++ [ ] Depth-First Search for Graphs
 + [ ] Brute-Force Search
