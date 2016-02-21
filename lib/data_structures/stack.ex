@@ -1,8 +1,10 @@
 defmodule Exads.DataStructures.Stack do
-
   @moduledoc """
   An implementation of the Stack data structure with lists.
   """
+
+  @opaque t(a) :: {__MODULE__, non_neg_integer, list(a)}
+  @opaque t :: t(any)
 
   @doc """
   Returns a new empty stack.
