@@ -68,7 +68,7 @@ defmodule Exads.DataStructures.Stack do
   @spec max(list(any())) :: any() | nil
 
   def max(stack) do
-    stack |> Enum.sort |> List.last
+    stack |> Enum.max
   end
 
   @doc """

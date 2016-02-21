@@ -1,10 +1,4 @@
 v2.
-{<<"_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.Stack.beam">>,
- 'Elixir.Exads.DataStructures.Stack',module,
- <<"lib/data_structures/stack.ex">>,
- ['Elixir.Kernel.Typespec','Elixir.Kernel','Elixir.Module'],
- [erlang,'Elixir.Enum','Elixir.List'],
- [],nil}.
 {<<"_build/test/lib/exads/ebin/Elixir.Exads.beam">>,'Elixir.Exads',module,
  <<"lib/exads.ex">>,
  ['Elixir.Kernel'],
@@ -26,4 +20,10 @@ v2.
  <<"lib/data_structures/binary_tree.ex">>,
  ['Elixir.Kernel.Typespec','Elixir.Kernel','Elixir.Module'],
  ['Elixir.Tuple',erlang,'Elixir.Enum',maps,'Elixir.List','Elixir.Map'],
+ [],nil}.
+{<<"_build/test/lib/exads/ebin/Elixir.Exads.DataStructures.Stack.beam">>,
+ 'Elixir.Exads.DataStructures.Stack',module,
+ <<"lib/data_structures/stack.ex">>,
+ ['Elixir.Kernel.Typespec','Elixir.Kernel','Elixir.Module'],
+ [erlang,'Elixir.Enum','Elixir.List'],
  [],nil}.
