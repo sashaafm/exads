@@ -72,6 +72,15 @@ defmodule Exads.DataStructures.Stack do
   end
 
   @doc """
+  Returns the minimum element in the stack using Elixir's built-in hierarchy.
+  """
+  @spec min(list(any())) :: any() | nil
+
+  def min(stack) do
+    stack |> Enum.min
+  end
+
+  @doc """
   Given a stack and an element, returns true if the element is a member
   of the stack or false otherwise.
   """
