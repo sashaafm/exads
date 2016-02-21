@@ -9,9 +9,9 @@ defmodule Exads.DataStructures.Stack do
   @doc """
   Returns a new empty stack.
   """
-  @spec new() :: []
+  @spec new() :: t
 
-  def new, do: []
+  def new, do: {__MODULE__, 0, []}
 
   @doc """
   Return the stack with the given element pushed into it.
