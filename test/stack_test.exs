@@ -4,7 +4,7 @@ defmodule StackTest do
   doctest Exads
 
   test "new stack" do
-    assert {Stack, 0, []} == S.new()
+    assert {S, 0, []} == S.new()
   end
 
   test "push to empty stack" do
