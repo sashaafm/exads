@@ -76,9 +76,10 @@ defmodule Exads.DataStructures.Stack do
   @doc """
   Returns the maximum element in the stack using Elixir's built-in hierarchy.
   """
-  @spec max(list(any())) :: any() | nil
+  @spec max(t(a)) :: a | nil when a: var
 
-  def max(stack) do
+  def max({__MODULE__, _size, []}), do: nil
+  def max({__MODULE__, _size, stack}) do
     stack |> Enum.max
   end
 

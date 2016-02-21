@@ -77,19 +77,22 @@ defmodule StackTest do
   end
 
   test "max with empty stack" do
-    assert S.max([]) == nil
+    assert S.max(S.new) == nil
   end
 
   test "max with non-empty stack" do
-    assert S.max([1, 2, 3]) == 3
+    stack = [1,2,3] |> S.from_list
+    assert S.max(stack) == 3
   end
 
   test "max with non-empty stack with one elem" do
-    assert S.max([:a]) == :a
+    stack = [:a] |> S.from_list
+    assert S.max(stack) == :a
   end
 
   test "max with non-empty stack with duplicate elem" do
-    assert S.max([:b, :a, :c, :a, :c, :b]) == :c
+    stack = [:b, :a, :c, :a, :c, :b] |> S.from_list
+    assert S.max(stack) == :c
   end
 
   test "member? with empty stack" do
