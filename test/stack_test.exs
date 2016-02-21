@@ -11,6 +11,19 @@ defmodule StackTest do
     assert S.push([],  1) == [1]
   end
 
+  test "from empty list" do
+    assert S.from_list([]) == {S, 0, []}
+  end
+
+  test "from short list" do
+    assert S.from_list([1,2]) == {S, 2, [1, 2]}
+  end
+
+  test "from long list" do
+    the_list = 1..1_000_000 |> Enum.into([])
+    assert S.from_list(the_list) == {S, 1_000_000, the_list}
+  end
+  
   test "push to non-empty stack" do
     assert S.push([1, 2, 3], 4) == [4, 1, 2, 3]
   end

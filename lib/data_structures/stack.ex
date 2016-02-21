@@ -14,6 +14,15 @@ defmodule Exads.DataStructures.Stack do
   def new, do: {__MODULE__, 0, []}
 
   @doc """
+  Returns a stack created from a given list. It does assume, that the item at
+  the front of the list is the youngest.
+  """
+
+  @spec from_list(list(a)) :: t(a) when a: var
+
+  def from_list(list), do: {__MODULE__, length(list), list}
+  
+  @doc """
   Return the stack with the given element pushed into it.
   """
   @spec push(list(any()), any()) :: list(any())
