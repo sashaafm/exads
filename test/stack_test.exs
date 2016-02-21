@@ -95,6 +95,25 @@ defmodule StackTest do
     assert S.max(stack) == :c
   end
 
+  test "min with empty stack" do
+    assert S.min(S.new) == nil
+  end
+
+  test "min with non-empty stack" do
+    stack = [1,2,3] |> S.from_list
+    assert S.min(stack) == 1
+  end
+
+  test "min with non-empty stack with one elem" do
+    stack = [:a] |> S.from_list
+    assert S.min(stack) == :a
+  end
+
+  test "min with non-empty stack with duplicate elem" do
+    stack = [:b, :a, :c, :a, :c, :b] |> S.from_list
+    assert S.min(stack) == :a
+  end
+  
   test "member? with empty stack" do
     assert S.member?([], 1) == false
   end
