@@ -120,23 +120,15 @@ defmodule Exads.DataStructures.Stack do
   Given a stack and an element returns true if element appears more than
   once in the stack or false otherwise.
   """
-  @spec more_than_once(list(any()), any()) :: boolean
+  @spec more_than_once(t(a), a) :: boolean when a: var
 
-  def more_than_once(stack, elem), do: mto stack, elem
+  def more_than_once({__MODULE__, _size, stack}, elem), do: mto stack, elem, 0
 
-  defp mto([], _), do: false
-  defp mto([head | tail], elem) do
-    if head == elem do 
-      if position(tail, elem) >= 1 do 
-      true
-      else
-        false
-      end
-    else
-      mto tail, elem
-    end
-  end
-
+  defp mto([], _, _), do: false
+  defp mto([elem|tail], elem, 1), do: true
+  defp mto([elem|tail], elem, 0), do: mto(tail, elem, 1)
+  defp mto([_head|tail], elem, c), do: mto(tail, elem, c)
+  
   @doc """
   Returns the size of the stack.
   """

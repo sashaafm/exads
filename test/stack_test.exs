@@ -163,18 +163,21 @@ defmodule StackTest do
   end
 
   test "more_than_once wih empty stack" do
-    assert S.more_than_once([], 1) == false
+    assert S.more_than_once(S.new, 1) == false
   end
 
   test "more_than_once with non-empty stack and non-member" do
-    assert S.more_than_once([1, 2, 3], 0) == false
+    stack = [1, 2, 3] |> S.from_list
+    assert S.more_than_once(stack, 0) == false
   end
 
   test "more_than_once with non-empty stack and member" do
-    assert S.more_than_once([1, 2, 3], 3) == false
+    stack = [1, 2, 3] |> S.from_list
+    assert S.more_than_once(stack, 3) == false
   end
 
   test "more_than_once with non-empty stack and duplicate member" do
-    assert S.more_than_once([1, 2, 3, 2], 2) == true
+    stack = [1, 2, 3, 2] |> S.from_list
+    assert S.more_than_once(stack, 2) == true
   end
 end
