@@ -99,15 +99,15 @@ defmodule Exads.DataStructures.Stack do
   Given a stack and an element, returns true if the element is a member
   of the stack or false otherwise.
   """
-  @spec member?(list(any()), any()) :: boolean
+  @spec member?(t(a), a) :: boolean when a: var
 
-  def member?(stack, elem) do 
+  def member?({__MODULE__, _size, stack}, elem) do 
     Enum.member? stack, elem
   end
 
   @doc """
   Returns the position in the stack of a given element. Returns -1 if the
-  element is not present. If the element appears more than once, then the 
+  element is not present. If the element appears more than once, then the
   first occurrence is considered.
   """
   @spec position(list(any()), any()) :: integer

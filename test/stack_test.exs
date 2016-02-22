@@ -130,15 +130,17 @@ defmodule StackTest do
   end
   
   test "member? with empty stack" do
-    assert S.member?([], 1) == false
+    assert S.member?(S.new, 1) == false
   end
 
   test "member? with non-empty stack and member" do
-    assert S.member?([3, 6, 2, 4], 6) == true
+    stack = [3, 6, 2, 4] |> S.from_list
+    assert S.member?(stack, 6) == true
   end
 
   test "member? with non-empty stack and non-member" do
-    assert S.member?([3, 6, 2, 4], 9) == false
+    stack = [3, 6, 2, 4] |> S.from_list
+    assert S.member?(stack, 9) == false
   end
 
   test "position with empty stack" do
