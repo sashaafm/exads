@@ -132,8 +132,8 @@ defmodule Exads.DataStructures.Stack do
   @doc """
   Returns the size of the stack.
   """
-  @spec size(list(any())) :: pos_integer()
+  @spec size(t) :: non_neg_integer()
 
-  def size(stack), do: length(stack)
+  def size({__MODULE__, size, _stack}), do: size
 
 end

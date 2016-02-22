@@ -180,4 +180,18 @@ defmodule StackTest do
     stack = [1, 2, 3, 2] |> S.from_list
     assert S.more_than_once(stack, 2) == true
   end
+
+  test "size of empty stack" do
+    assert S.size(S.new) == 0
+  end
+
+  test "size of short stack" do
+    stack = [1,2,3] |> S.from_list
+    assert S.size(stack) == 3
+  end
+
+  test "size of long stack" do
+    stack = 1..1_000_000 |> Enum.into([]) |> S.from_list
+    assert S.size(stack) == 1_000_000
+  end
 end
