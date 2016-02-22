@@ -79,11 +79,12 @@ defmodule StackTest do
   end
 
   test "top with empty stack" do
-    assert S.top([]) == nil
+    assert S.top(S.new) == nil
   end
 
   test "top with non-empty stack" do
-    assert S.top(["a", "b", "c"]) == "a"
+    stack = ["a", "b", "c"] |> S.from_list
+    assert S.top(stack) == "a"
   end
 
   test "top with wrong type" do

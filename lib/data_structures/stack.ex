@@ -66,11 +66,13 @@ defmodule Exads.DataStructures.Stack do
   Returns the top element from the stack without removing it. If the stack
   is empty returns nil.
   """
-  @spec top(list(any())) :: any() | nil
+  @spec top(t(a)) :: a | nil when a: var
 
-  def top([]), do: nil
-  def top(stack) do 
-    stack |> List.first 
+  def top({__MODULE__, _size, _stack} = stack_obj) do
+    case pop(stack_obj) do
+      {result, _} -> result
+      nil         -> nil
+    end
   end
 
   @doc """
