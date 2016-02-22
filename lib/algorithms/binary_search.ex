@@ -21,8 +21,7 @@ defmodule Exads.Algorithms.BinarySearch do
 		{_, val} = Enum.fetch array, mid
 
 		cond do
-			val > key -> 
-				bs array, key, min, mid - 1
+			val > key -> bs array, key, min, mid - 1
 			val < key -> bs array, key, min + 1, max
 			true 			-> mid
 		end
