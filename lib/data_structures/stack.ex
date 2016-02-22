@@ -57,11 +57,10 @@ defmodule Exads.DataStructures.Stack do
   @doc """
   Returns true if the stack is empty or false otherwise.
   """
-  @spec empty?([]) :: boolean
+  @spec empty?(t) :: boolean
 
-  def empty?(stack) do 
-    Enum.empty? stack
-  end
+  def empty?({__MODULE__, 0, []}), do: true
+  def empty?({__MODULE__, _size, _stack}), do: false
 
   @doc """
   Returns the top element from the stack without removing it. If the stack
