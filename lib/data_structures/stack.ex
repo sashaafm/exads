@@ -25,10 +25,10 @@ defmodule Exads.DataStructures.Stack do
   @doc """
   Return the stack with the given element pushed into it.
   """
-  @spec push(list(any()), any()) :: list(any())
+  @spec push(t(a), a) :: t(a) when a: var
 
-  def push(stack, elem) do
-    [elem|stack]
+  def push({__MODULE__, size, stack}, elem) do
+    {__MODULE__, size + 1, [elem|stack]}
   end
 
   @doc """

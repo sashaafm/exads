@@ -8,7 +8,7 @@ defmodule StackTest do
   end
 
   test "push to empty stack" do
-    assert S.push([],  1) == [1]
+    assert S.push(S.new,  1) == S.from_list([1])
   end
 
   test "from empty list" do
@@ -25,7 +25,9 @@ defmodule StackTest do
   end
   
   test "push to non-empty stack" do
-    assert S.push([1, 2, 3], 4) == [4, 1, 2, 3]
+    stack = [1, 2, 3]    |> S.from_list
+    exp   = [4, 1, 2, 3] |> S.from_list
+    assert S.push(stack, 4) == exp
   end
 
   test "pop from empty stack" do
