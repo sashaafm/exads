@@ -144,19 +144,22 @@ defmodule StackTest do
   end
 
   test "position with empty stack" do
-    assert S.position([], 6) == -1
+    assert S.position(S.new, 6) == nil
   end
 
   test "position with non-empty stack and member elem" do
-    assert S.position([4, 5, 2], 5) == 2
+    stack = [4, 5, 2] |> S.from_list
+    assert S.position(stack, 5) == 1
   end
 
   test "position with non-empty stack and non-member elem" do
-    assert S.position([4, 5, 2], 6) == -1
+    stack = [4, 5, 2] |> S.from_list
+    assert S.position(stack, 6) == nil
   end
 
   test "position with non-empty stack and duplicate elem" do
-    assert S.position([4, 5, 2, 4], 4) == 1
+    stack = [4, 5, 2, 4] |> S.from_list
+    assert S.position(stack, 4) == 0
   end
 
   test "more_than_once wih empty stack" do

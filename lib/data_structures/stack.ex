@@ -110,19 +110,10 @@ defmodule Exads.DataStructures.Stack do
   element is not present. If the element appears more than once, then the
   first occurrence is considered.
   """
-  @spec position(list(any()), any()) :: integer
+  @spec position(t(a), a) :: non_neg_integer | nil when a: var
 
-  def position(stack, elem) do 
-    get_pos stack, elem, 1
-  end
-
-  defp get_pos([], _, _), do: -1
-  defp get_pos([head | tail], elem, count) do 
-    if head == elem do 
-    count
-    else
-      get_pos tail, elem, count + 1
-    end
+  def position({__MODULE__, _size, stack}, elem) do
+    stack |> Enum.find_index(&(&1 === elem))
   end
 
   @doc """
