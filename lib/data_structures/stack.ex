@@ -45,12 +45,13 @@ defmodule Exads.DataStructures.Stack do
   @doc """
   Deletes the top element from the stack.
   """
-  @spec delete(list(any())) :: list(any())
+  @spec delete(t(a)) :: t(a) | nil when a: var
 
-  def delete([]), do: nil
-  def delete(stack) do 
-    {_, result} = pop(stack)
-    result
+  def delete({__MODULE__, _size, _stack} = stack_obj) do 
+    case pop(stack_obj) do
+      {_, result} -> result
+      nil         -> nil
+    end
   end
 
   @doc """

@@ -47,15 +47,18 @@ defmodule StackTest do
   end
 
   test "delete from empty stack" do
-    assert S.delete([]) == nil
+    assert S.delete(S.new) == nil
   end
 
   test "delete from non-empty stack" do
-    assert S.delete([7, 6, "hello", 9, << 10 :: 8 >>, 6]) == [6, "hello", 9, << 10 :: 8 >>, 6]
+    stack = [7, 6, "hello", 9, << 10 :: 8 >>, 6] |> S.from_list
+    exp   = [6, "hello", 9, << 10 :: 8 >>, 6] |> S.from_list
+    assert S.delete(stack) == exp
   end
 
   test "delete from non-empty stack with one elem" do
-    assert S.delete(["just this elem"]) == []
+    stack = ["just this elem"] |> S.from_list
+    assert S.delete(stack) == S.new
   end
 
   test "empty?" do
