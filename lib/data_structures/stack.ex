@@ -35,11 +35,11 @@ defmodule Exads.DataStructures.Stack do
   Pops the top element from the stack returning a tuple with the format
   {element, new_list}
   """
-  @spec pop(list(any())) :: tuple()
+  @spec pop(t(a)) :: {a, t(a)} | nil when a: var
 
-  def pop([]), do: nil
-  def pop([head | tail] = _stack) do
-    {head, tail}
+  def pop({__MODULE__, 0, []}), do: nil
+  def pop({__MODULE__, size, [head | tail]} = _stack) do
+    {head, {__MODULE__, size - 1, tail}}
   end
 
   @doc """

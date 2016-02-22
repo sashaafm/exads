@@ -31,15 +31,19 @@ defmodule StackTest do
   end
 
   test "pop from empty stack" do
-    assert S.pop([]) == nil
+    assert S.pop(S.new) == nil
   end
 
   test "pop from non-empty stack" do
-    assert S.pop([1, 2, 3]) == {1, [2, 3]}
+    stack = [1, 2, 3] |> S.from_list
+    exp   = [2, 3]    |> S.from_list
+    assert S.pop(stack) == {1, exp}
   end
 
   test "pop from non-empty stack with one elem" do
-    assert S.pop([1]) == {1, []}
+    stack = [1] |> S.from_list
+    exp   = S.new
+    assert S.pop(stack) == {1, exp}
   end
 
   test "delete from empty stack" do
