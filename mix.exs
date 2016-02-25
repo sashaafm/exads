@@ -27,6 +27,6 @@ defmodule Exads.Mixfile do
   #
   # Type `mix help deps` for more examples and options
   defp deps do
-    [{:inch_ex, only: :docs}]
+    [{:inch_ex, only: [:dev, :test]}]
   end
 end
