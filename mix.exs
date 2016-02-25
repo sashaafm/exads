@@ -29,6 +29,7 @@ defmodule Exads.Mixfile do
   defp deps do
     [
       {:inch_ex, only: [:dev, :test]},
+      {:credo, "~> 0.3", only: [:dev, :test]},
     ]
   end
 end
