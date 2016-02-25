@@ -1,3 +1,6 @@
+[![Travis CI build status](https://api.travis-ci.org/sashaafm/exads.svg)](https://travis-ci.org/sashaafm/exads)
+[![Inch CI docs status](http://inch-ci.org/github/sashaafm/exads.svg)](http://inch-ci.org/github/sashaafm/exads)
+
 # Exads
 
 *Algorithms and Data Structures Collection in Elixir*
