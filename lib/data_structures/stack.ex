@@ -40,8 +40,8 @@ defmodule Exads.DataStructures.Stack do
   @spec pop(t(a)) :: {a, t(a)} | nil when a: var
 
   def pop(%__MODULE__{size: 0, stack: []}), do: nil
-  def pop({__MODULE__, s, [head | tail]} = _stack) do
-    {head, {__MODULE__, s - 1, tail}}
+  def pop(stack = %__MODULE__{size: s, stack: [head | tail]}) do
+    {head, %{stack | size: s - 1, stack: tail}}
   end
 
   @doc """
