@@ -125,8 +125,8 @@ defmodule Exads.DataStructures.Stack do
   def more_than_once({__MODULE__, _size, stack}, e), do: mto stack, e, 0
 
   defp mto([], _, _), do: false
-  defp mto([elem|tail], e, 1), do: true
-  defp mto([elem|tail], e, 0), do: mto(tail, e, 1)
+  defp mto([e|_tail], e, 1), do: true
+  defp mto([e|tail], e, 0), do: mto(tail, e, 1)
   defp mto([_head|tail], e, c), do: mto(tail, e, c)
 
   @doc """
