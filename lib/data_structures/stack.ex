@@ -61,8 +61,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec empty?(t) :: boolean
 
-  def empty?({__MODULE__, 0, []}), do: true
-  def empty?({__MODULE__, _size, _stack}), do: false
+  def empty?(%__MODULE__{size: 0, stack: []}), do: true
+  def empty?(%__MODULE__{}), do: false
 
   @doc """
   Returns the top element from the stack without removing it. If the stack
@@ -70,8 +70,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec top(t(a)) :: a | nil when a: var
 
-  def top({__MODULE__, _size, _stack} = stack_obj) do
-    case pop(stack_obj) do
+  def top(stack = %__MODULE__{}) do
+    case pop(stack) do
       {result, _} -> result
       nil         -> nil
     end
