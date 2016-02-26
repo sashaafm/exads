@@ -22,15 +22,15 @@ defmodule Exads.DataStructures.Stack do
 
   @spec from_list(list(a)) :: t(a) when a: var
 
-  def from_list(list), do: {__MODULE__, length(list), list}
+  def from_list(list), do: %__MODULE__{size: length(list), stack: list}
 
   @doc """
   Return the stack with the given element pushed into it.
   """
   @spec push(t(a), a) :: t(a) when a: var
 
-  def push({__MODULE__, s, stack}, e) do
-    {__MODULE__, s + 1, [e|stack]}
+  def push(stack = %__MODULE__{size: s, stack: list}, e) do
+    %{stack | size: s + 1, stack: [e|list]}
   end
 
   @doc """
