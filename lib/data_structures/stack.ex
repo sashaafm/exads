@@ -111,8 +111,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec position(t(a), a) :: non_neg_integer | nil when a: var
 
-  def position({__MODULE__, _size, stack}, e) do
-    stack |> Enum.find_index(&(&1 === e))
+  def position(%__MODULE__{stack: list}, e) do
+    list |> Enum.find_index(&(&1 === e))
   end
 
   @doc """
