@@ -18,7 +18,7 @@ defmodule StackTest do
   end
 
   test "from short list" do
-    assert S.from_list([1,2]) == {S, 2, [1, 2]}
+    assert S.from_list([1,2]) == %S{size: 2, stack: [1, 2]}
   end
 
   test "from long list" do
