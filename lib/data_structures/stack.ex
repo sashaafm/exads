@@ -133,6 +133,6 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec size(t) :: non_neg_integer()
 
-  def size({__MODULE__, s, _stack}), do: s
+  def size(%__MODULE__{size: s}), do: s
 
 end
