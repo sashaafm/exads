@@ -1,11 +1,14 @@
 language: elixir
 elixir:
-    - 1.2.3
+  - 1.2.3
 before_script:
   - export PATH=`pwd`/elixir/bin:$PATH
   - mix local.hex --force
-  - mix deps.get --only test
-script: mix test    
+  - mix deps.get
+  - mix dialyzer.plt
+script:
+  - mix dialyzer
+  - mix test
 after_script:
-    - mix deps.get
-    - mix inch.report
+  - mix deps.get
+  - mix inch.report
