@@ -82,20 +82,17 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec max(t(a)) :: a | nil when a: var
 
-  def max({__MODULE__, _size, []}), do: nil
-  def max({__MODULE__, _size, stack}) do
-    stack |> Enum.max
-  end
+  def max(%__MODULE__{stack: list}), do: minmax(list, &Enum.max/1)
 
   @doc """
   Returns the minimum element in the stack using Elixir's built-in hierarchy.
   """
   @spec min(t(a)) :: a | nil when a: var
 
-  def min({__MODULE__, _size, []}), do: nil
-  def min({__MODULE__, _size, stack}) do
-    stack |> Enum.min
-  end
+  def min(%__MODULE__{stack: list}), do: minmax(list, &Enum.min/1)
+
+  defp minmax([], _fun), do: nil
+  defp minmax(list, fun), do: fun.(list)
 
   @doc """
   Given a stack and an element, returns true if the element is a member
