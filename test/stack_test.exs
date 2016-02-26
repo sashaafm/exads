@@ -23,7 +23,7 @@ defmodule StackTest do
 
   test "from long list" do
     the_list = 1..1_000_000 |> Enum.into([])
-    assert S.from_list(the_list) == {S, 1_000_000, the_list}
+    assert S.from_list(the_list) == %S{size: 1_000_000, stack: the_list}
   end
 
   test "push to non-empty stack" do
