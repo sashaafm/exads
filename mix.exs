@@ -28,6 +28,7 @@ defmodule Exads.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
+      {:dialyxir, "~> 0.3.3", only: :dev},
       {:inch_ex, "~> 0.5", only: [:dev, :test]},
       {:credo, "~> 0.3", only: [:dev, :test]},
     ]

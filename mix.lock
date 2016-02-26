@@ -1,6 +1,5 @@
-%{
-	"inch_ex": {:hex, :inch_ex, "0.5.1"},
-  "poison":  {:hex, :poison,  "2.1.0"},
-	"bunt": 	 {:hex, :bunt, 	  "0.1.5"},
-  "credo": 	 {:hex, :credo,   "0.3.3"}
- }
+%{"bunt": {:hex, :bunt, "0.1.5"},
+  "credo": {:hex, :credo, "0.3.3"},
+  "dialyxir": {:hex, :dialyxir, "0.3.3"},
+  "inch_ex": {:hex, :inch_ex, "0.5.1"},
+  "poison": {:hex, :poison, "2.1.0"}}
