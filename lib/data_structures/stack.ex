@@ -49,8 +49,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec delete(t(a)) :: t(a) | nil when a: var
 
-  def delete({__MODULE__, _size, _stack} = stack_obj) do
-    case pop(stack_obj) do
+  def delete(stack = %__MODULE__{}) do
+    case pop(stack) do
       {_, result} -> result
       nil         -> nil
     end
