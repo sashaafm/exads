@@ -121,7 +121,7 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec more_than_once(t(a), a) :: boolean when a: var
 
-  def more_than_once({__MODULE__, _size, stack}, e), do: mto stack, e, 0
+  def more_than_once(%__MODULE__{stack: list}, e), do: mto list, e, 0
 
   defp mto([], _, _), do: false
   defp mto([e|_tail], e, 1), do: true
