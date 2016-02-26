@@ -100,8 +100,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec member?(t(a), a) :: boolean when a: var
 
-  def member?({__MODULE__, _size, stack}, e) do
-    Enum.member? stack, e
+  def member?(%__MODULE__{stack: list}, e) do
+    Enum.member? list, e
   end
 
   @doc """
