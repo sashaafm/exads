@@ -14,7 +14,7 @@ defmodule StackTest do
   end
 
   test "from empty list" do
-    assert S.from_list([]) == {S, 0, []}
+    assert S.from_list([]) == %S{size: 0, stack: []}
   end
 
   test "from short list" do
