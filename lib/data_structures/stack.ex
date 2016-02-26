@@ -21,14 +21,14 @@ defmodule Exads.DataStructures.Stack do
   @spec from_list(list(a)) :: t(a) when a: var
 
   def from_list(list), do: {__MODULE__, length(list), list}
-  
+
   @doc """
   Return the stack with the given element pushed into it.
   """
   @spec push(t(a), a) :: t(a) when a: var
 
-  def push({__MODULE__, size, stack}, elem) do
-    {__MODULE__, size + 1, [elem|stack]}
+  def push({__MODULE__, s, stack}, elem) do
+    {__MODULE__, s + 1, [elem|stack]}
   end
 
   @doc """
@@ -38,8 +38,8 @@ defmodule Exads.DataStructures.Stack do
   @spec pop(t(a)) :: {a, t(a)} | nil when a: var
 
   def pop({__MODULE__, 0, []}), do: nil
-  def pop({__MODULE__, size, [head | tail]} = _stack) do
-    {head, {__MODULE__, size - 1, tail}}
+  def pop({__MODULE__, s, [head | tail]} = _stack) do
+    {head, {__MODULE__, s - 1, tail}}
   end
 
   @doc """
@@ -47,7 +47,7 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec delete(t(a)) :: t(a) | nil when a: var
 
-  def delete({__MODULE__, _size, _stack} = stack_obj) do 
+  def delete({__MODULE__, _size, _stack} = stack_obj) do
     case pop(stack_obj) do
       {_, result} -> result
       nil         -> nil
@@ -101,7 +101,7 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec member?(t(a), a) :: boolean when a: var
 
-  def member?({__MODULE__, _size, stack}, elem) do 
+  def member?({__MODULE__, _size, stack}, elem) do
     Enum.member? stack, elem
   end
 
@@ -128,12 +128,12 @@ defmodule Exads.DataStructures.Stack do
   defp mto([elem|tail], elem, 1), do: true
   defp mto([elem|tail], elem, 0), do: mto(tail, elem, 1)
   defp mto([_head|tail], elem, c), do: mto(tail, elem, c)
-  
+
   @doc """
   Returns the size of the stack.
   """
   @spec size(t) :: non_neg_integer()
 
-  def size({__MODULE__, size, _stack}), do: size
+  def size({__MODULE__, s, _stack}), do: s
 
 end
