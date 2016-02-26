@@ -13,7 +13,7 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec new() :: t
 
-  def new, do: {__MODULE__, 0, []}
+  def new, do: %__MODULE__{}
 
   @doc """
   Returns a stack created from a given list. It does assume, that the item at
