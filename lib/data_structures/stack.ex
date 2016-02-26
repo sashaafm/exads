@@ -27,8 +27,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec push(t(a), a) :: t(a) when a: var
 
-  def push({__MODULE__, s, stack}, elem) do
-    {__MODULE__, s + 1, [elem|stack]}
+  def push({__MODULE__, s, stack}, e) do
+    {__MODULE__, s + 1, [e|stack]}
   end
 
   @doc """
@@ -101,8 +101,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec member?(t(a), a) :: boolean when a: var
 
-  def member?({__MODULE__, _size, stack}, elem) do
-    Enum.member? stack, elem
+  def member?({__MODULE__, _size, stack}, e) do
+    Enum.member? stack, e
   end
 
   @doc """
@@ -112,8 +112,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec position(t(a), a) :: non_neg_integer | nil when a: var
 
-  def position({__MODULE__, _size, stack}, elem) do
-    stack |> Enum.find_index(&(&1 === elem))
+  def position({__MODULE__, _size, stack}, e) do
+    stack |> Enum.find_index(&(&1 === e))
   end
 
   @doc """
@@ -122,12 +122,12 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec more_than_once(t(a), a) :: boolean when a: var
 
-  def more_than_once({__MODULE__, _size, stack}, elem), do: mto stack, elem, 0
+  def more_than_once({__MODULE__, _size, stack}, e), do: mto stack, e, 0
 
   defp mto([], _, _), do: false
-  defp mto([elem|tail], elem, 1), do: true
-  defp mto([elem|tail], elem, 0), do: mto(tail, elem, 1)
-  defp mto([_head|tail], elem, c), do: mto(tail, elem, c)
+  defp mto([elem|tail], e, 1), do: true
+  defp mto([elem|tail], e, 0), do: mto(tail, e, 1)
+  defp mto([_head|tail], e, c), do: mto(tail, e, c)
 
   @doc """
   Returns the size of the stack.
