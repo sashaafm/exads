@@ -3,7 +3,9 @@ defmodule Exads.DataStructures.Stack do
   An implementation of the Stack data structure with lists.
   """
 
-  @opaque t(a) :: {__MODULE__, non_neg_integer, list(a)}
+  defstruct size: 0, stack: []
+
+  @opaque t(a) :: %__MODULE__{size: non_neg_integer, stack: list(a)}
   @opaque t :: t(any)
 
   @doc """
@@ -11,7 +13,7 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec new() :: t
 
-  def new, do: {__MODULE__, 0, []}
+  def new, do: %__MODULE__{}
 
   @doc """
   Returns a stack created from a given list. It does assume, that the item at
@@ -20,15 +22,15 @@ defmodule Exads.DataStructures.Stack do
 
   @spec from_list(list(a)) :: t(a) when a: var
 
-  def from_list(list), do: {__MODULE__, length(list), list}
+  def from_list(list), do: %__MODULE__{size: length(list), stack: list}
 
   @doc """
   Return the stack with the given element pushed into it.
   """
   @spec push(t(a), a) :: t(a) when a: var
 
-  def push({__MODULE__, s, stack}, e) do
-    {__MODULE__, s + 1, [e|stack]}
+  def push(stack = %__MODULE__{size: s, stack: list}, e) do
+    %{stack | size: s + 1, stack: [e|list]}
   end
 
   @doc """
@@ -37,9 +39,9 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec pop(t(a)) :: {a, t(a)} | nil when a: var
 
-  def pop({__MODULE__, 0, []}), do: nil
-  def pop({__MODULE__, s, [head | tail]} = _stack) do
-    {head, {__MODULE__, s - 1, tail}}
+  def pop(%__MODULE__{size: 0, stack: []}), do: nil
+  def pop(stack = %__MODULE__{size: s, stack: [head | tail]}) do
+    {head, %{stack | size: s - 1, stack: tail}}
   end
 
   @doc """
@@ -47,8 +49,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec delete(t(a)) :: t(a) | nil when a: var
 
-  def delete({__MODULE__, _size, _stack} = stack_obj) do
-    case pop(stack_obj) do
+  def delete(stack = %__MODULE__{}) do
+    case pop(stack) do
       {_, result} -> result
       nil         -> nil
     end
@@ -59,8 +61,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec empty?(t) :: boolean
 
-  def empty?({__MODULE__, 0, []}), do: true
-  def empty?({__MODULE__, _size, _stack}), do: false
+  def empty?(%__MODULE__{size: 0, stack: []}), do: true
+  def empty?(%__MODULE__{}), do: false
 
   @doc """
   Returns the top element from the stack without removing it. If the stack
@@ -68,8 +70,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec top(t(a)) :: a | nil when a: var
 
-  def top({__MODULE__, _size, _stack} = stack_obj) do
-    case pop(stack_obj) do
+  def top(stack = %__MODULE__{}) do
+    case pop(stack) do
       {result, _} -> result
       nil         -> nil
     end
@@ -80,20 +82,17 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec max(t(a)) :: a | nil when a: var
 
-  def max({__MODULE__, _size, []}), do: nil
-  def max({__MODULE__, _size, stack}) do
-    stack |> Enum.max
-  end
+  def max(%__MODULE__{stack: list}), do: minmax(list, &Enum.max/1)
 
   @doc """
   Returns the minimum element in the stack using Elixir's built-in hierarchy.
   """
   @spec min(t(a)) :: a | nil when a: var
 
-  def min({__MODULE__, _size, []}), do: nil
-  def min({__MODULE__, _size, stack}) do
-    stack |> Enum.min
-  end
+  def min(%__MODULE__{stack: list}), do: minmax(list, &Enum.min/1)
+
+  defp minmax([], _fun), do: nil
+  defp minmax(list, fun), do: fun.(list)
 
   @doc """
   Given a stack and an element, returns true if the element is a member
@@ -101,8 +100,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec member?(t(a), a) :: boolean when a: var
 
-  def member?({__MODULE__, _size, stack}, e) do
-    Enum.member? stack, e
+  def member?(%__MODULE__{stack: list}, e) do
+    Enum.member? list, e
   end
 
   @doc """
@@ -112,8 +111,8 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec position(t(a), a) :: non_neg_integer | nil when a: var
 
-  def position({__MODULE__, _size, stack}, e) do
-    stack |> Enum.find_index(&(&1 === e))
+  def position(%__MODULE__{stack: list}, e) do
+    list |> Enum.find_index(&(&1 === e))
   end
 
   @doc """
@@ -122,7 +121,7 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec more_than_once(t(a), a) :: boolean when a: var
 
-  def more_than_once({__MODULE__, _size, stack}, e), do: mto stack, e, 0
+  def more_than_once(%__MODULE__{stack: list}, e), do: mto list, e, 0
 
   defp mto([], _, _), do: false
   defp mto([e|_tail], e, 1), do: true
@@ -134,6 +133,6 @@ defmodule Exads.DataStructures.Stack do
   """
   @spec size(t) :: non_neg_integer()
 
-  def size({__MODULE__, s, _stack}), do: s
+  def size(%__MODULE__{size: s}), do: s
 
 end
