@@ -118,11 +118,28 @@ defmodule Exads.DataStructures.Stack do
 
   @doc """
   Given a stack and an element returns true if element appears more than
-  once in the stack or false otherwise.
+  once in the stack or false otherwise. Compares the elements using a match!
+
+  ## Parameter
+
+  * `stack`: The actual stack that shall be inspected.
+  * `needle`: The thing you want to find inside the `stack`.
+
+  ## Example
+
+      iex> more_than_once(new, 0)
+      false
+
+      iex> more_than_once(from_list([1,2,3,1]), 1)
+      true
+
+      iex> more_than_once(from_list([1, 1.0]), 1.0)
+      false
   """
   @spec more_than_once(t(a), a) :: boolean when a: var
 
-  def more_than_once({__MODULE__, _size, stack}, e), do: mto stack, e, 0
+  def more_than_once(stack, needle)
+  def more_than_once({__MODULE__, _size, stack}, needle), do: mto stack, needle, 0
 
   defp mto([], _, _), do: false
   defp mto([e|_tail], e, 1), do: true

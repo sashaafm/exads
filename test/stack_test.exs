@@ -1,10 +1,10 @@
 defmodule StackTest do
   use ExUnit.Case, async: true
   alias Exads.DataStructures.Stack, as: S
-  doctest Exads
+  doctest Exads.DataStructures.Stack, import: true
 
   ExUnit.configure exclude: :pending
-  
+
   test "new stack" do
     assert {S, 0, []} == S.new()
   end
@@ -25,7 +25,7 @@ defmodule StackTest do
     the_list = 1..1_000_000 |> Enum.into([])
     assert S.from_list(the_list) == {S, 1_000_000, the_list}
   end
-  
+
   test "push to non-empty stack" do
     stack = [1, 2, 3]    |> S.from_list
     exp   = [4, 1, 2, 3] |> S.from_list
@@ -128,7 +128,7 @@ defmodule StackTest do
     stack = [:b, :a, :c, :a, :c, :b] |> S.from_list
     assert S.min(stack) == :a
   end
-  
+
   test "member? with empty stack" do
     assert S.member?(S.new, 1) == false
   end
