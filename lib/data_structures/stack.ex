@@ -106,12 +106,29 @@ defmodule Exads.DataStructures.Stack do
   end
 
   @doc """
-  Returns the position in the stack of a given element. Returns -1 if the
+  Returns the position in the stack of a given element. Returns `nil` if the
   element is not present. If the element appears more than once, then the
-  first occurrence is considered.
+  first occurrence is considered. Compares the elements using a match.
+
+  ## Parameter
+
+  * `stack`: The actual stack that shall be inspected.
+  * `needle`: The thing you want to find inside the `stack`
+
+  ## Example
+
+      iex> position(new, 0)
+      nil
+
+      iex> position(from_list([1,2,3]), 2.0)
+      nil
+
+      iex> position(from_list([?a, ?b, ?c]), ?b)
+      1
   """
   @spec position(t(a), a) :: non_neg_integer | nil when a: var
 
+  def position(stack, needle)
   def position({__MODULE__, _size, stack}, e) do
     stack |> Enum.find_index(&(&1 === e))
   end
