@@ -96,10 +96,27 @@ defmodule Exads.DataStructures.Stack do
 
   @doc """
   Given a stack and an element, returns true if the element is a member
-  of the stack or false otherwise.
+  of the stack or false otherwise. Compares the elements using a match.
+
+  ## Parameter
+
+  * `stack`: The actual stack that shall be inspected.
+  * `needle`: The thing you want to find inside the `stack`.
+
+  ## Example
+
+      iex> member?(new, 0)
+      false
+
+      iex> member?(from_list([1,2,3]), 2.0)
+      false
+
+      iex> member?(from_list([?a, ?b, ?c]), ?b)
+      true
   """
   @spec member?(t(a), a) :: boolean when a: var
 
+  def member?(stack, needle)
   def member?(%__MODULE__{stack: list}, e) do
     Enum.member? list, e
   end
