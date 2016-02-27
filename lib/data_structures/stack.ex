@@ -26,9 +26,25 @@ defmodule Exads.DataStructures.Stack do
 
   @doc """
   Return the stack with the given element pushed into it.
+
+  ## Parameter
+
+  * `stack`: The stack to push onto.
+  * `element`: The element you want to push.
+
+  ## Example
+
+      iex> a = new |> push(0)
+      #Stack<[0]>
+      iex> a |> push(1)
+      #Stack<[1, 0]>
+
+      iex> from_list([4,3,2,1]) |> push(0)
+      #Stack<[0, 4, 3, 2, 1]>
   """
   @spec push(t(a), a) :: t(a) when a: var
 
+  def push(stack, element)
   def push(stack = %__MODULE__{size: s, stack: list}, e) do
     %{stack | size: s + 1, stack: [e|list]}
   end
