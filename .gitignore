@@ -5,6 +5,7 @@
 /_build
 /cover
 /deps
+/plt/.local.plt
 erl_crash.dump
 *.ez
 
