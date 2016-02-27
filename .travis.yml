@@ -12,3 +12,7 @@ script:
 after_script:
   - mix deps.get
   - mix inch.report
+cache:
+  directories:
+    - deps
+    - plt
