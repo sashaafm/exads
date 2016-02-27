@@ -186,3 +186,13 @@ defmodule Exads.DataStructures.Stack do
 
   def size(%__MODULE__{size: s}), do: s
 end
+
+defimpl Inspect, for: Exads.DataStructures.Stack do
+  import Inspect.Algebra
+
+  alias Exads.DataStructures.Stack
+
+  def inspect(%Stack{stack: stack}, opts) do
+    concat ["#Stack<", to_doc(stack, opts), ">"]
+  end
+end
