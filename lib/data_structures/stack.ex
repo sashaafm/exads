@@ -139,6 +139,18 @@ defmodule Exads.DataStructures.Stack do
   @doc """
   Returns the top element from the stack without removing it. If the stack
   is empty returns nil.
+
+  ## Parameter
+
+  * `stack`: The stack you want to inspect.
+
+  ## Example
+
+      iex> new |> top
+      nil
+
+      iex> new |> push(1) |> top
+      1
   """
   @spec top(t(a)) :: a | nil when a: var
 
