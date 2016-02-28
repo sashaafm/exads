@@ -91,6 +91,18 @@ defmodule Exads.DataStructures.Stack do
 
   @doc """
   Deletes the top element from the stack.
+
+  ## Parameter
+
+  * `stack`: The stack you want to delete the top-element from.
+
+  ## Example
+
+      iex> new |> delete
+      nil
+
+      iex> [1,2,3] |> from_list |> delete
+      #Stack<[2, 3]>
   """
   @spec delete(t(a)) :: t(a) | nil when a: var
 
