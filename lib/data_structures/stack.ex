@@ -10,6 +10,11 @@ defmodule Exads.DataStructures.Stack do
 
   @doc """
   Returns a new empty stack.
+
+  ## Example
+
+      iex> new
+      #Stack<[]>
   """
   @spec new() :: t
 
