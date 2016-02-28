@@ -68,7 +68,19 @@ defmodule Exads.DataStructures.Stack do
 
   @doc """
   Pops the top element from the stack returning a tuple with the format
-  {element, new_list}
+  `{popped_element, new_stack}
+
+  ## Parameter
+
+  * `stack`: The stack to pop from.
+
+  ## Example
+
+      iex> new |> pop
+      nil
+
+      iex> new |> push(1) |> pop |> inspect
+      "{1, #Stack<[]>}"
   """
   @spec pop(t(a)) :: {a, t(a)} | nil when a: var
 
