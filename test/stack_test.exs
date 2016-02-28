@@ -1,7 +1,7 @@
 defmodule StackTest do
   use ExUnit.Case, async: true
   alias Exads.DataStructures.Stack, as: S
-  doctest Exads
+  doctest Exads.DataStructures.Stack, import: true
 
   ExUnit.configure exclude: :pending
 

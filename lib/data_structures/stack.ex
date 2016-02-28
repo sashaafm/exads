@@ -105,23 +105,57 @@ defmodule Exads.DataStructures.Stack do
   end
 
   @doc """
-  Returns the position in the stack of a given element. Returns -1 if the
+  Returns the position in the stack of a given element. Returns `nil` if the
   element is not present. If the element appears more than once, then the
-  first occurrence is considered.
+  first occurrence is considered. Compares the elements using a match.
+
+  ## Parameter
+
+  * `stack`: The actual stack that shall be inspected.
+  * `needle`: The thing you want to find inside the `stack`
+
+  ## Example
+
+      iex> position(new, 0)
+      nil
+
+      iex> position(from_list([1,2,3]), 2.0)
+      nil
+
+      iex> position(from_list([?a, ?b, ?c]), ?b)
+      1
   """
   @spec position(t(a), a) :: non_neg_integer | nil when a: var
 
+  def position(stack, needle)
   def position(%__MODULE__{stack: list}, e) do
     list |> Enum.find_index(&(&1 === e))
   end
 
   @doc """
   Given a stack and an element returns true if element appears more than
-  once in the stack or false otherwise.
+  once in the stack or false otherwise. Compares the elements using a match!
+
+  ## Parameter
+
+  * `stack`: The actual stack that shall be inspected.
+  * `needle`: The thing you want to find inside the `stack`.
+
+  ## Example
+
+      iex> more_than_once(new, 0)
+      false
+
+      iex> more_than_once(from_list([1,2,3,1]), 1)
+      true
+
+      iex> more_than_once(from_list([1, 1.0]), 1.0)
+      false
   """
   @spec more_than_once(t(a), a) :: boolean when a: var
 
-  def more_than_once(%__MODULE__{stack: list}, e), do: mto list, e, 0
+  def more_than_once(stack, needle)
+  def more_than_once(%__MODULE__{stack: stack}, needle), do: mto stack, needle, 0
 
   defp mto([], _, _), do: false
   defp mto([e|_tail], e, 1), do: true
@@ -134,5 +168,4 @@ defmodule Exads.DataStructures.Stack do
   @spec size(t) :: non_neg_integer()
 
   def size(%__MODULE__{size: s}), do: s
-
 end
