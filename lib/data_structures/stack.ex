@@ -115,6 +115,21 @@ defmodule Exads.DataStructures.Stack do
 
   @doc """
   Returns true if the stack is empty or false otherwise.
+
+  ## Parameter
+
+  * `stack`: The stack you want to check emptyness.
+
+  ## Example
+
+      iex> new |> push(1) |> empty?
+      false
+
+      iex> new |> empty?
+      true
+
+      iex> new |> push(1) |> delete |> empty?
+      true
   """
   @spec empty?(t) :: boolean
 
