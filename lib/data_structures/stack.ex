@@ -23,6 +23,18 @@ defmodule Exads.DataStructures.Stack do
   @doc """
   Returns a stack created from a given list. It does assume, that the item at
   the front of the list is the youngest.
+
+  ## Parameter
+
+  * `list`: The list that shall get converted into the stack.
+
+  ## Example
+
+      iex> new === from_list([])
+      true
+
+      iex> from_list([1,2,3])
+      #Stack<[1, 2, 3]>
   """
 
   @spec from_list(list(a)) :: t(a) when a: var
