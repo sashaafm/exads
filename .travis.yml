@@ -7,7 +7,7 @@ before_script:
   - mix deps.get
   - mix dialyzer.plt
 script:
-  - mix dialyzer
+  - mix dialyzer --halt-exit-status
   - mix test
 after_script:
   - mix deps.get
