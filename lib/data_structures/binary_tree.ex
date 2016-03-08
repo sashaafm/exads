@@ -93,7 +93,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 
   def find_parent(:leaf, _), do: nil
   def find_parent(node, node_value) do
-    if node.left != :leaf && node.left.value == node_value do
+    _ = if node.left != :leaf && node.left.value == node_value do
       node
     end
     if node.right != :leaf && node.right.value == node_value do
@@ -176,7 +176,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Performs a Breadth-First Search in the given 'tree'. The nodes' values are
   returned as a list.
   """
-  @spec breadth_first_search(%{}) :: list(any)
+  @spec breadth_first_search(%{}) :: nonempty_list(any)
 
   def breadth_first_search(tree) do
     bfs(tree)
