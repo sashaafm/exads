@@ -14,7 +14,7 @@ defmodule Exads.DataStructures.Queue do
   @doc """
   Inserts a new element into the queue and returns the resulting queue.
   """
-  @spec enqueue(list(any()), any()) :: list(any())
+  @spec enqueue(list(any()), any()) :: nonempty_list(any())
 
   def enqueue(queue, elem) do
     queue ++ [elem]
