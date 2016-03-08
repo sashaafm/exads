@@ -176,7 +176,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Performs a Breadth-First Search in the given 'tree'. The nodes' values are
   returned as a list.
   """
-  @spec breadth_first_search(%{}) :: list(any)
+  @spec breadth_first_search(%{}) :: nonempty_list(any)
 
   def breadth_first_search(tree) do
     bfs(tree)
