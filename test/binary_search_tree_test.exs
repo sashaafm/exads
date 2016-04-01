@@ -122,7 +122,12 @@ defmodule BinarySearchTreeTest do
                            |> BST.insert(8) |> BST.insert(6)
                            |> BST.insert(0) |> BST.insert(5) |> BST.insert(7)
 
-    assert BST.breadth_first_search(new_tree) == [2, 1, 0, 3, 4, 7, 6, 5, 8, 7]
+    assert BST.breadth_first_search(new_tree) == [2, 1, 3, 0, 4, 7, 6, 8, 5, 7]
+  end
+
+  test "bread-first search 2 levels", _ do
+    tree = BST.new(5) |> BST.insert(3) |> BST.insert(7) |> BST.insert(1)
+    assert BST.breadth_first_search(tree) == [5, 3, 7, 1]
   end
 
   test "exists existing element", tree do

@@ -172,6 +172,19 @@ defmodule Exads.DataStructures.BinarySearchTree do
     end
   end
 
+
+  defp children(list) do
+    Enum.map(list, fn (x) -> case x do
+        %{left: :leaf, value: _, right: :leaf} -> []
+        %{left: left, value: _, right: :leaf} -> left
+        %{left: :leaf, value: _, right: right} -> right
+        %{left: left, value: _, right: right} -> [left, right]
+        _ -> []
+      end
+    end)
+    |> List.flatten
+  end
+
   @doc """
   Performs a Breadth-First Search in the given 'tree'. The nodes' values are
   returned as a list.
@@ -179,23 +192,12 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @spec breadth_first_search(%{}) :: nonempty_list(any)
 
   def breadth_first_search(tree) do
-    bfs(tree)
+    bfs([tree]) |> Enum.map(fn (x) -> x.value end)
   end
 
-  defp bfs(%{value: val, left: :leaf, right: :leaf}) do
-    [val]
-  end
-
-  defp bfs(%{value: val, left: :leaf, right: right}) do
-    [val] ++ bfs(right)
-  end
-
-  defp bfs(%{value: val, left: left, right: :leaf}) do
-    [val] ++ bfs(left)
-  end
-
-  defp bfs(%{value: val, left: left, right: right}) do
-    [val] ++ bfs(left) ++ bfs(right)
+  defp bfs([]), do: []
+  defp bfs(list) do
+    list ++ bfs(children(list))
   end
 
   @doc """
