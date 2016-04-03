@@ -47,7 +47,13 @@ defmodule Exads.DataStructures.BSTree do
   defp del({:leaf, _, :leaf}), do: :leaf
   defp del({:leaf, _, right}), do: right
   defp del({left, _, :leaf}), do: left
-  defp del({left, _, right}), do: {elem(left, 0), elem(left, 1), right}
+  defp del({left, _, right}) do
+    m = min(right)
+    {left, m, delete(right, m)}
+  end
+
+  defp min({:leaf, val, _}), do: val
+  defp min({left, _, _}), do: min(left)
 
   @spec delete(bst, any) :: bst
   def delete(:leaf), do: :leaf

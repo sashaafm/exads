@@ -55,6 +55,23 @@ defmodule BinarySearchTreeTest do
       value: 2}
   end
 
+  #       50             50
+  #      /              /
+  #     40 z           42
+  #    /  \      =>   /  \
+  #   30   45        30   45
+  #        /
+  #       42 x
+  test "delete with both children and successor" do
+    assert BST.new(50) |> BST.insert(40) |> BST.insert(30)
+      |> BST.insert(45) |> BST.insert(42)  |> BST.delete_node(40) ==
+      %{value: 50,
+        left: %{value: 42,
+                left: %{value: 30, left: :leaf, right: :leaf},
+                right: %{value: 45, left: :leaf, right: :leaf}},
+        right: :leaf}
+  end
+
   test "delete non-existing node in BST", tree do
     assert BST.delete_node(tree[:tree], 8) == nil
   end

@@ -78,7 +78,20 @@ defmodule BSTreeTest do
   test "delete non-root with both children", %{tree: tree} do
     assert tree |> Bst.insert(5) |> Bst.insert(3) |> Bst.insert(4)
       |> Bst.insert(2) |> Bst.delete(3) ==
-      {{:leaf, 2, {:leaf, 4, :leaf}}, 5, :leaf}
+      {{{:leaf, 2, :leaf}, 4, :leaf}, 5, :leaf}
+  end
+
+  #       50             50
+  #      /              /
+  #     40 z           42
+  #    /  \      =>   /  \
+  #   30   45        30   45
+  #        /
+  #       42 x
+  test "delete with both children and successor", %{tree: tree} do
+    assert tree |> Bst.insert(50) |> Bst.insert(40) |> Bst.insert(30)
+      |> Bst.insert(45) |> Bst.insert(42)  |> Bst.delete(40) ==
+      { {{:leaf, 30, :leaf}, 42, {:leaf, 45, :leaf}}, 50, :leaf}
   end
 
   test "inorder", %{tree: tree} do
