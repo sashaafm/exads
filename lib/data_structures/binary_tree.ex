@@ -103,7 +103,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Finds the node with the provided 'node_value' or nil if it does not
   exist in the tree.
   """
-  @spec find_node(%{} | :leaf, any) :: %{} | nil
+  @spec find_node(Node.bst_node | :leaf, any) :: Node.bst_node | nil
 
   def find_node(:leaf, _), do: nil
   def find_node(node = %{value: node_value, left: _, right: _},
@@ -122,7 +122,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @doc """
   Finds the parent of the node with the given 'node_value'.
   """
-  @spec find_parent(%{} | :leaf, any) :: %{} | nil
+  @spec find_parent(Node.bst_node | :leaf, any) :: Node.bst_node | nil
 
   def find_parent(:leaf, _), do: nil
   def find_parent(node, node_value) do

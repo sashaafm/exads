@@ -84,10 +84,10 @@ defmodule BinarySearchTreeTest do
 
   test "find existing node's parent", tree do
     assert BST.find_parent(tree[:tree], 3) ==
-      %{left:  %{left:  :leaf,
+      %BST.Node{left:  %BST.Node{left:  :leaf,
                 right: :leaf,
                 value: 1},
-        right: %{left:  :leaf,
+        right: %BST.Node{left:  :leaf,
                 right: :leaf,
                 value: 3},
         value: 2}
