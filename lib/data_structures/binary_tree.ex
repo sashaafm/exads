@@ -3,32 +3,33 @@ defmodule Exads.DataStructures.BinarySearchTree do
 
   defprotocol BSTComparable do
     @fallback_to_any true
+    @dialyzer {:nowarn_function, __protocol__: 1}
 
     @doc """
       Implementation of greater for BST comparisons
     """
-    @spec greater(any, any) :: boolean
-    def greater(left, right)
+    @spec any > any :: boolean
+    def left > right
 
     @doc """
        Implementation of less for BST comparisons
     """
-    @spec smaller(any, any) :: boolean
-    def smaller(left, right)
+    @spec any < any :: boolean
+    def left < right
 
   end
 
   defimpl BSTComparable, for: Any do
-    def greater(left, right), do: Kernel.>(left, right)
-    def smaller(left, right), do: Kernel.<(left, right)
+    def left > right, do: Kernel.>(left, right)
+    def left < right, do: Kernel.<(left, right)
   end
 
   def left < right do
-    BSTComparable.smaller(left, right)
+    BSTComparable.<(left, right)
   end
 
   def left > right do
-    BSTComparable.greater(left, right)
+    BSTComparable.>(left, right)
   end
 
   defmodule Node do

@@ -3,6 +3,17 @@ defmodule BinarySearchTreeTest do
   alias Exads.DataStructures.BinarySearchTree, as: BST
   doctest Exads
 
+  defmodule ComplexTestValue do
+    defstruct key: 0, value: ""
+  end
+
+  defimpl BST.BSTComparable, for: ComplexTestValue do
+    import Kernel, except: [{:>, 2}, {:<, 2}]
+
+    def left > right, do: Kernel.>(left.key, right.key)
+    def left < right, do: Kernel.<(left.key, right.key)
+  end
+
   setup do
     {:ok, tree: BST.new(2) |> BST.insert(1) |> BST.insert(3)}
   end
@@ -35,6 +46,16 @@ defmodule BinarySearchTreeTest do
                  right: :leaf,
                  value: 3},
         value: 2}
+  end
+
+  test "insert complex value in BST" do
+    assert BST.new(%ComplexTestValue{key: 6}) |> BST.insert(%ComplexTestValue{key: 1}) ==
+      %BST.Node{left:   %BST.Node{left:    :leaf,
+                                 right:   :leaf,
+                                 value:   %ComplexTestValue{key: 1}},
+                right:  :leaf,
+                value:  %ComplexTestValue{key: 6}}
+
   end
 
   test "delete existing node in BST rightside", tree do
