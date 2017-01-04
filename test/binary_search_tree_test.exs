@@ -13,10 +13,10 @@ defmodule BinarySearchTreeTest do
 
   test "insert value in BST rightside", tree do
     assert BST.insert(tree[:tree], 5) ==
-      %{left: %{left: :leaf,
+      %BST.Node{left: %BST.Node{left: :leaf,
                 right: :leaf,
                 value: 1},
-        right: %{left: :leaf,
+        right: %BST.Node{left: :leaf,
                  right: %{left: :leaf,
                           right: :leaf,
                           value: 5 },
@@ -26,12 +26,12 @@ defmodule BinarySearchTreeTest do
 
   test "insert value in BST leftside", tree do
     assert BST.insert(tree[:tree], 0) ==
-      %{left:  %{left:  %{left:  :leaf,
+      %BST.Node{left:  %BST.Node{left:  %BST.Node{left:  :leaf,
                           right: :leaf,
                           value: 0},
                  right: :leaf,
                  value: 1},
-        right: %{left:  :leaf,
+        right: %BST.Node{left:  :leaf,
                  right: :leaf,
                  value: 3},
         value: 2}

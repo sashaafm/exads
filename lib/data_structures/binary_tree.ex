@@ -1,4 +1,41 @@
 defmodule Exads.DataStructures.BinarySearchTree do
+  import Kernel, except: [{:>, 2}, {:<, 2}]
+
+  defprotocol BSTComparable do
+    @fallback_to_any true
+
+    @doc """
+      Implementation of greater for BST comparisons
+    """
+    @spec greater(any, any) :: boolean
+    def greater(left, right)
+
+    @doc """
+       Implementation of less for BST comparisons
+    """
+    @spec smaller(any, any) :: boolean
+    def smaller(left, right)
+
+  end
+
+  defimpl BSTComparable, for: Any do
+    def greater(left, right), do: Kernel.>(left, right)
+    def smaller(left, right), do: Kernel.<(left, right)
+  end
+
+  def left < right do
+    BSTComparable.smaller(left, right)
+  end
+
+  def left > right do
+    BSTComparable.greater(left, right)
+  end
+
+  defmodule Node do
+
+    @type bst_node :: %__MODULE__{value: any, left: :leaf | bst_node, right: :leaf | bst_node, augmentation: any}
+    defstruct value: nil, left: :leaf, right: :leaf, augmentation: nil
+  end
 
   @moduledoc """
   An implementation of the Binary Search Tree abstract data structure
@@ -8,23 +45,23 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @doc """
   Creates a new Binary Search Tree with the root's value as the given 'value'.
   """
-  @spec new(any) :: %{}
+  @spec new(any) :: Node.bst_node
 
   def new(value) do
-    %{value: value, left: :leaf, right: :leaf}
+    %Node{value: value, left: :leaf, right: :leaf}
   end
 
   @doc """
   Creates and inserts a node with its value as 'node_value' into the tree.
   """
-  @spec insert(%{} | :leaf, any) :: %{}
+  @spec insert(Node.bst_node | :leaf, any) :: Node.bst_node
 
   def insert(:leaf, node_value), do: new node_value
-  def insert(%{value: value, left: left, right: right}, node_value) do
+  def insert(%Node{value: value, left: left, right: right} = current_node, node_value) do
     if node_value < value do
-      %{value: value, left: insert(left, node_value), right: right}
+      %{current_node | left: insert(left, node_value)}
     else
-      %{value: value, left: left, right: insert(right, node_value)}
+      %{current_node | right: insert(right, node_value)}
     end
   end
 
