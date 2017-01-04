@@ -91,7 +91,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
 
   defp del(%Node{left: :leaf,  value: _, right: right}), do: right
   defp del(%Node{left: left, value: _, right: :leaf}),   do: left
-  defp del(%Node{left: left, value: _, right: right} = current_node) do
+  defp del(%Node{left: _, value: _, right: right} = current_node) do
     %{current_node | value: min(right), right: delete(right, min(right))}
   end
 
@@ -143,7 +143,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @doc """
   Finds the depth of the node with the given 'node_value'.
   """
-  @spec node_depth(%{} | nil, any) :: integer
+  @spec node_depth(Node.bst_node | nil, any) :: integer
 
   def node_depth(tree, node_value), do: nd tree, node_value, 0
 
@@ -161,7 +161,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @doc """
   Finds the height of the given 'tree'.
   """
-  @spec tree_height(%{}) :: integer
+  @spec tree_height(Node.bst_node) :: integer
 
   def tree_height(tree) do
     tree
@@ -184,7 +184,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   returned in a list. The order of the search is passed into 'order' using
   the atoms ':in_order', ':pre_order' or ':post_order'
   """
-  @spec depth_first_search(%{}, atom) :: list(any)
+  @spec depth_first_search(BST.bst_node, atom) :: list(any)
 
   def depth_first_search(tree, order) when order == :pre_order or
     order == :in_order  or
@@ -222,7 +222,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Performs a Breadth-First Search in the given 'tree'. The nodes' values are
   returned as a list.
   """
-  @spec breadth_first_search(%{}) :: nonempty_list(any)
+  @spec breadth_first_search(Node.bst_node) :: nonempty_list(any)
 
   def breadth_first_search(tree) do
     bfs([tree]) |> Enum.map(fn (x) -> x.value end)
@@ -257,7 +257,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Returns how many occurrences of the given 'node_value' are inside the
   'tree'.
   """
-  @spec how_many?(%{}, any) :: pos_integer
+  @spec how_many?(Node.bst_node, any) :: pos_integer
 
   def how_many?(tree, node_value) do
     d tree, node_value, 0

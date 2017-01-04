@@ -8,7 +8,7 @@ defmodule BinarySearchTreeTest do
   end
 
   test "new BST" do
-    assert BST.new(2) == %{left: :leaf, right: :leaf, value: 2}
+    assert BST.new(2) == %BST.Node{left: :leaf, right: :leaf, value: 2}
   end
 
   test "insert value in BST rightside", tree do
@@ -17,7 +17,7 @@ defmodule BinarySearchTreeTest do
                 right: :leaf,
                 value: 1},
         right: %BST.Node{left: :leaf,
-                 right: %{left: :leaf,
+                 right: %BST.Node{left: :leaf,
                           right: :leaf,
                           value: 5 },
                  value: 3},
@@ -55,7 +55,7 @@ defmodule BinarySearchTreeTest do
       value: 2}
   end
 
-  test "delete existing node right side with left children", tree do
+  test "delete existing node right side with left children" do
     tree = BST.new(6) |> BST.insert(1) |> BST.insert(12) |> BST.insert(8) |> BST.insert(9)
     assert BST.delete_node(tree, 12) ==
     %BST.Node{left:   %BST.Node{left:   :leaf,
