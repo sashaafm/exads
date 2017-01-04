@@ -69,7 +69,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Removes a node with 'node_value' from the given 'tree'. Returns :leaf if the
   node does not exist.
   """
-  @spec delete_node(%{}, any) :: %{} | nil
+  @spec delete_node(Node.bst_node, any) :: Node.bst_node | nil
 
   def delete_node(tree, node_value) do
     if exists?(tree, node_value) do
@@ -81,26 +81,22 @@ defmodule Exads.DataStructures.BinarySearchTree do
 
   defp delete(tree, node_value) do
     cond do
-    tree.value == node_value -> del(tree)
-    tree.value <  node_value ->
-    %{left: tree.left,
-      value: tree.value,
-      right: delete(tree.right, node_value)}
+      tree.value == node_value -> del(tree)
+      tree.value <  node_value ->
+        %Node{tree | right: delete(tree.right, node_value)}
       tree.value > node_value ->
-        %{left: delete(tree.left,node_value),
-          value: tree.value,
-          right: tree.right}
+        %Node{tree | left: delete(tree.left,node_value)}
     end
   end
 
-  defp del(%{left: :leaf,  value: _, right: right}), do: right
-  defp del(%{left: left, value: _, right: :leaf}),   do: left
-  defp del(%{left: left, value: _, right: right}) do
-    %{left: left, value: min(right), right: delete(right, min(right))}
+  defp del(%Node{left: :leaf,  value: _, right: right}), do: right
+  defp del(%Node{left: left, value: _, right: :leaf}),   do: left
+  defp del(%Node{left: left, value: _, right: right} = current_node) do
+    %{current_node | value: min(right), right: delete(right, min(right))}
   end
 
-  defp min(%{left: :leaf,  value: val, right: _}), do: val
-  defp min(%{left: left, value: _,   right: _}), do: min left
+  defp min(%Node{left: :leaf,  value: val, right: _}), do: val
+  defp min(%Node{left: left, value: _,   right: _}), do: min left
 
 
   @doc """
@@ -241,14 +237,14 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Returns true if a node with the given 'node_value' exists in the 'tree' or
   false otherwise.
   """
-  @spec exists?(%{}, any) :: boolean
+  @spec exists?(Node.bst_node, any) :: boolean
 
   def exists?(tree, node_value) do
     e tree, node_value
   end
 
   defp e(:leaf, _), do: false
-  defp e(%{value: node_value, left: _, right: _}, node_value), do: true
+  defp e(%Node{value: node_value, left: _, right: _}, node_value), do: true
   defp e(tree_node, node_value) do
     if node_value < tree_node.value do
       e tree_node.left, node_value

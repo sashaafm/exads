@@ -39,7 +39,7 @@ defmodule BinarySearchTreeTest do
 
   test "delete existing node in BST rightside", tree do
     assert BST.delete_node(tree[:tree], 3) ==
-      %{left:  %{left:  :leaf,
+      %BST.Node{left:  %BST.Node{left:  :leaf,
                 right: :leaf,
                 value: 1},
         right: :leaf,
@@ -48,8 +48,8 @@ defmodule BinarySearchTreeTest do
 
   test "delete existing node in BST leftside", tree do
     assert BST.delete_node(tree[:tree], 1) ==
-    %{left:  :leaf,
-      right: %{left:  :leaf,
+    %BST.Node{left:  :leaf,
+      right: %BST.Node{left:  :leaf,
                right: :leaf,
                value: 3},
       value: 2}
@@ -58,11 +58,11 @@ defmodule BinarySearchTreeTest do
   test "delete existing node right side with left children", tree do
     tree = BST.new(6) |> BST.insert(1) |> BST.insert(12) |> BST.insert(8) |> BST.insert(9)
     assert BST.delete_node(tree, 12) ==
-    %{left:   %{left:   :leaf,
+    %BST.Node{left:   %BST.Node{left:   :leaf,
                 right:  :leaf,
                 value:  1},
-      right:  %{left:   :leaf,
-                right:  %{left:   :leaf,
+      right:  %BST.Node{left:   :leaf,
+                right:  %BST.Node{left:   :leaf,
                           right:  :leaf,
                           value:  9},
                 value:  8},
@@ -75,7 +75,7 @@ defmodule BinarySearchTreeTest do
 
   test "find existing node", tree do
     assert BST.find_node(tree[:tree], 3) ==
-      %{left: :leaf, right: :leaf, value: 3}
+      %BST.Node{left: :leaf, right: :leaf, value: 3}
   end
 
   test "find non-existing node", tree do
