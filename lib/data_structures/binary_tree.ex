@@ -38,6 +38,9 @@ defmodule Exads.DataStructures.BinarySearchTree do
     defstruct value: nil, left: :leaf, right: :leaf, augmentation: nil
   end
 
+  @spec identityAugment(Node.bst_node) :: Node.bst_node
+  defp identityAugment(node), do: node
+
   @moduledoc """
   An implementation of the Binary Search Tree abstract data structure
   using Map.
@@ -46,23 +49,24 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @doc """
   Creates a new Binary Search Tree with the root's value as the given 'value'.
   """
-  @spec new(any) :: Node.bst_node
+  @spec new(any, (Node.bst_node -> Node.bst_node)) :: Node.bst_node
 
-  def new(value) do
-    %Node{value: value, left: :leaf, right: :leaf}
+  def new(value, augmentation \\ &identityAugment/1) do
+    %Node{value: value, left: :leaf, right: :leaf} |> augmentation.()
   end
 
   @doc """
   Creates and inserts a node with its value as 'node_value' into the tree.
   """
-  @spec insert(Node.bst_node | :leaf, any) :: Node.bst_node
+  @spec insert(Node.bst_node | :leaf, any, (Node.bst_node -> Node.bst_node)) :: Node.bst_node
 
-  def insert(:leaf, node_value), do: new node_value
-  def insert(%Node{value: value, left: left, right: right} = current_node, node_value) do
+  def insert(node, node_value, augmentation \\ &identityAugment/1)
+  def insert(:leaf, node_value, augmentation), do: new(node_value, augmentation)
+  def insert(%Node{value: value, left: left, right: right} = current_node, node_value, augmentation) do
     if node_value < value do
-      %{current_node | left: insert(left, node_value)}
+      %{current_node | left: insert(left, node_value, augmentation)} |> augmentation.()
     else
-      %{current_node | right: insert(right, node_value)}
+      %{current_node | right: insert(right, node_value, augmentation)} |> augmentation.()
     end
   end
 
