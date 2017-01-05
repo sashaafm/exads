@@ -1,7 +1,7 @@
 defmodule Exads.DataStructures.BinarySearchTree do
   import Kernel, except: [{:>, 2}, {:<, 2}]
 
-  defprotocol BSTComparable do
+  defprotocol Comparable do
     @fallback_to_any true
     @dialyzer {:nowarn_function, __protocol__: 1}
 
@@ -19,17 +19,17 @@ defmodule Exads.DataStructures.BinarySearchTree do
 
   end
 
-  defimpl BSTComparable, for: Any do
+  defimpl Comparable, for: Any do
     def left > right, do: Kernel.>(left, right)
     def left < right, do: Kernel.<(left, right)
   end
 
   def left < right do
-    BSTComparable.<(left, right)
+    Comparable.<(left, right)
   end
 
   def left > right do
-    BSTComparable.>(left, right)
+    Comparable.>(left, right)
   end
 
   defmodule Node do

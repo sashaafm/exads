@@ -7,7 +7,7 @@ defmodule BinarySearchTreeTest do
     defstruct key: 0, value: ""
   end
 
-  defimpl BST.BSTComparable, for: ComplexTestValue do
+  defimpl BST.Comparable, for: ComplexTestValue do
     import Kernel, except: [{:>, 2}, {:<, 2}]
 
     def left > right, do: Kernel.>(left.key, right.key)
