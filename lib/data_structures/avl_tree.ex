@@ -53,13 +53,22 @@ defmodule Exads.DataStructures.AVLTree do
     cond do
       tree.augmentation.bf < -1 ->
         tree =
-        if tree.right.augmentation.bf > 0 do
-          %{tree | right: right_rotation(tree.right)} |> augment()
+          if tree.right.augmentation.bf > 0 do
+            %{tree | right: right_rotation(tree.right)} |> augment()
+          else
+            tree
+          end
+        left_rotation(tree)
+
+      tree.augmentation.bf > 1 ->
+      tree =
+        if tree.left.augmentation.bf < 0 do
+          %{tree | left: left_rotation(tree.left)} |> augment()
         else
           tree
         end
-        left_rotation(tree)
-      tree.augmentation.bf > 1 -> right_rotation(tree)
+      right_rotation(tree)
+
       true -> tree |> augment()
     end
   end
