@@ -56,26 +56,34 @@ defmodule Exads.DataStructures.AVLTree do
   @spec rotate(BST.Node.bst_node) :: BST.Node.bst_node
   defp rotate(tree) do
     cond do
-      tree.augmentation.bf < -1 ->
-        tree =
-          if tree.right.augmentation.bf > 0 do
-            %{tree | right: right_rotation(tree.right)} |> augment()
-          else
-            tree
-          end
-        left_rotation(tree)
-
-      tree.augmentation.bf > 1 ->
-      tree =
-        if tree.left.augmentation.bf < 0 do
-          %{tree | left: left_rotation(tree.left)} |> augment()
-        else
-          tree
-        end
-      right_rotation(tree)
-
+      tree.augmentation.bf < -1 -> rotate_left_heavy(tree)
+      tree.augmentation.bf > 1 -> rotate_right_heavy(tree)
       true -> tree |> augment()
     end
+  end
+
+  @spec rotate_left_heavy(BST.Node.bst_node) :: BST.Node.bst_node
+  defp rotate_left_heavy(tree) do
+    # Transform to case 1 in case double rotation is required
+    tree =
+      if tree.right.augmentation.bf > 0 do
+        %{tree | right: right_rotation(tree.right)} |> augment()
+      else
+        tree
+      end
+    left_rotation(tree)
+  end
+
+  @spec rotate_right_heavy(BST.Node.bst_node) :: BST.Node.bst_node
+  defp rotate_right_heavy(tree) do
+    # Transform to case 1 in case double rotation is required
+    tree =
+      if tree.left.augmentation.bf < 0 do
+        %{tree | left: left_rotation(tree.left)} |> augment()
+      else
+        tree
+      end
+    right_rotation(tree)
   end
 
   @spec left_rotation(BST.Node.bst_node) :: BST.Node.bst_node
