@@ -1,6 +1,15 @@
 defmodule Exads.DataStructures.BinarySearchTree do
   import Kernel, except: [{:>, 2}, {:<, 2}]
 
+  @moduledoc """
+  An implementation of the Binary Search Tree abstract data structure
+  using Map.
+  """
+
+  @doc """
+  Comparable protocoll which needs to be implemented for all BST values
+  """
+
   defprotocol Comparable do
     @fallback_to_any true
     @dialyzer {:nowarn_function, __protocol__: 1}
@@ -38,12 +47,12 @@ defmodule Exads.DataStructures.BinarySearchTree do
     defstruct value: nil, left: :leaf, right: :leaf, augmentation: nil
   end
 
+  @doc """
+  Implements the identity processor
+  """
+  @spec identity(Node.bst_node) :: Node.bst_node
   def identity(node), do: node
 
-  @moduledoc """
-  An implementation of the Binary Search Tree abstract data structure
-  using Map.
-  """
 
   @doc """
   Creates a new Binary Search Tree with the root's value as the given 'value'.
