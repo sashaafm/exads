@@ -21,11 +21,13 @@ defmodule Exads.DataStructures.AVLTree do
 
   def new(value), do: BST.new(value, [post: &post_processor/1])
 
+  @spec insert(BST.Node.bst_node, any) :: BST.Node.bst_node
   def insert(tree, node_value) do
     BST.insert(tree, node_value, [post: &post_processor/1])
   end
 
-  def post_processor(node), do: augment(node) |> balance()
+  @spec post_processor(BST.Node.bst_node) :: BST.Node.bst_node
+  defp post_processor(node), do: augment(node) |> balance()
 
 
   @spec augment(BST.Node.bst_node | :leaf) :: BST.Node.bst_node
@@ -41,6 +43,8 @@ defmodule Exads.DataStructures.AVLTree do
     %{node | augmentation: %Augmentation{height:  max(left.augmentation.height, right.augmentation.height) + 1,
                                          bf:      left.augmentation.height - right.augmentation.height}}
 
+
+  @spec balance(BST.Node.bst_node) :: BST.Node.bst_node
   defp balance(node) do
     if Kernel.abs(node.augmentation.bf) > 1 do
       rotate(node)
@@ -49,6 +53,7 @@ defmodule Exads.DataStructures.AVLTree do
     end
   end
 
+  @spec rotate(BST.Node.bst_node) :: BST.Node.bst_node
   defp rotate(tree) do
     cond do
       tree.augmentation.bf < -1 ->
@@ -73,12 +78,14 @@ defmodule Exads.DataStructures.AVLTree do
     end
   end
 
+  @spec left_rotation(BST.Node.bst_node) :: BST.Node.bst_node
   defp left_rotation(tree) do
     left = %BST.Node{left: tree.left, right: tree.right.left, value: tree.value} |> augment()
     right = %BST.Node{left: tree.right.right.left, right: tree.right.right.right, value: tree.right.right.value} |> augment()
     %BST.Node{left: left, right: right, value: tree.right.value} |> augment()
   end
 
+  @spec right_rotation(BST.Node.bst_node) :: BST.Node.bst_node
   defp right_rotation(tree) do
     right = %BST.Node{left: tree.left.right, right: tree.right, value: tree.value} |> augment()
     left = %BST.Node{left: tree.left.left.left, right: tree.left.left.right, value: tree.left.left.value} |> augment()
