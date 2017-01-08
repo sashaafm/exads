@@ -38,8 +38,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
     defstruct value: nil, left: :leaf, right: :leaf, augmentation: nil
   end
 
-  @spec identityAugment(Node.bst_node) :: Node.bst_node
-  defp identityAugment(node), do: node
+  def identity(node), do: node
 
   @moduledoc """
   An implementation of the Binary Search Tree abstract data structure
@@ -49,24 +48,26 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @doc """
   Creates a new Binary Search Tree with the root's value as the given 'value'.
   """
-  @spec new(any, (Node.bst_node -> Node.bst_node)) :: Node.bst_node
+  @spec new(any, [{atom(), (Node.bst_node -> Node.bst_node)}]) :: Node.bst_node
 
-  def new(value, augmentation \\ &identityAugment/1) do
-    %Node{value: value, left: :leaf, right: :leaf} |> augmentation.()
+  def new(value, processors \\ []) do
+    processors = Keyword.merge([pre: &identity/1, post: &identity/1], processors)
+    %Node{value: value, left: :leaf, right: :leaf} |> processors[:post].()
   end
 
   @doc """
   Creates and inserts a node with its value as 'node_value' into the tree.
   """
-  @spec insert(Node.bst_node | :leaf, any, (Node.bst_node -> Node.bst_node)) :: Node.bst_node
+  @spec insert(Node.bst_node | :leaf, any, [{atom(), (Node.bst_node -> Node.bst_node)}]) :: Node.bst_node
 
-  def insert(node, node_value, augmentation \\ &identityAugment/1)
-  def insert(:leaf, node_value, augmentation), do: new(node_value, augmentation)
-  def insert(%Node{value: value, left: left, right: right} = current_node, node_value, augmentation) do
+  def insert(node, node_value, processors \\ [])
+  def insert(:leaf, node_value, processors), do: new(node_value, processors)
+  def insert(%Node{value: value, left: left, right: right} = current_node, node_value, processors) do
+    processors = Keyword.merge([pre: &identity/1, post: &identity/1], processors)
     if node_value < value do
-      %{current_node | left: insert(left, node_value, augmentation)} |> augmentation.()
+      processors[:pre].(current_node) |> (fn node -> %{node | left: insert(left, node_value, processors)} end).() |> processors[:post].()
     else
-      %{current_node | right: insert(right, node_value, augmentation)} |> augmentation.()
+      processors[:pre].(current_node) |> (fn node -> %{node | right: insert(right, node_value, processors)} end).() |> processors[:post].()
     end
   end
 

@@ -1,6 +1,6 @@
 defmodule Exads.DataStructures.AVLTree do
-
   alias Exads.DataStructures.BinarySearchTree, as: BST
+
 
   defmodule Augmentation do
 
@@ -19,11 +19,13 @@ defmodule Exads.DataStructures.AVLTree do
   """
   @spec new(any) :: BST.Node.bst_node
 
-  def new(value), do: BST.new(value, &augment/1)
+  def new(value), do: BST.new(value, [post: &post_processor/1])
 
   def insert(tree, node_value) do
-    BST.insert(tree, node_value, &augment/1)
+    BST.insert(tree, node_value, [post: &post_processor/1])
   end
+
+  def post_processor(node), do: augment(node)
 
 
   @spec augment(BST.Node.bst_node | :leaf) :: BST.Node.bst_node
