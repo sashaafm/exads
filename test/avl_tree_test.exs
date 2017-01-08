@@ -49,7 +49,55 @@ defmodule Exads.DataStructures.AVLTreeTest do
                                           augmentation: %AVL.Augmentation{height: 0, bf: 0}},
                   value:  6,
                   augmentation: %AVL.Augmentation{height: 2, bf: 1}}
-    end
+  end
+
+  test "right-heavy insert with single rotation required", %{tree: tree} do
+    assert tree |> AVL.insert(11) |> AVL.insert(14) |> AVL.insert(15) ==
+      %BST.Node{left:         %BST.Node{left:         %BST.Node{left:         :leaf,
+                                                                right:        :leaf,
+                                                                value:        1,
+                                                                augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                        right:        %BST.Node{left:         :leaf,
+                                                                right:        :leaf,
+                                                                value:        11,
+                                                                augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                        value:        6,
+                                        augmentation: %AVL.Augmentation{height: 1, bf: 0}},
+                right:        %BST.Node{left:         :leaf,
+                                        right:        %BST.Node{left:         :leaf,
+                                                                right:        :leaf,
+                                                                value:        15,
+                                                                augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                        value:        14,
+                                        augmentation: %AVL.Augmentation{height: 1, bf: -1}},
+                value:  12,
+                augmentation: %AVL.Augmentation{height: 2, bf: 0}}
+
+  end
+
+  test "left-heavy insert with single rotation required", %{tree: tree} do
+    assert tree |> AVL.insert(11) |> AVL.insert(14) |> AVL.insert(15) ==
+      %BST.Node{left:         %BST.Node{left:         %BST.Node{left:         :leaf,
+                                                                right:        :leaf,
+                                                                value:        1,
+                                                                augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                        right:        %BST.Node{left:         :leaf,
+                                                                right:        :leaf,
+                                                                value:        11,
+                                                                augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                        value:        6,
+                                        augmentation: %AVL.Augmentation{height: 1, bf: 0}},
+                right:        %BST.Node{left:         :leaf,
+                                        right:        %BST.Node{left:         :leaf,
+                                                                right:        :leaf,
+                                                                value:        15,
+                                                                augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                        value:        14,
+                                        augmentation: %AVL.Augmentation{height: 1, bf: -1}},
+                value:  12,
+                augmentation: %AVL.Augmentation{height: 2, bf: 0}}
+
+  end
 
 
 
