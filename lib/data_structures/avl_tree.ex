@@ -21,6 +21,10 @@ defmodule Exads.DataStructures.AVLTree do
 
   def new(value), do: BST.new(value, [post: &post_processor/1])
 
+  @doc """
+  Creates and inserts a node with its value as 'node_value' into the tree.
+  """
+
   @spec insert(BST.Node.bst_node, any) :: BST.Node.bst_node
   def insert(tree, node_value) do
     BST.insert(tree, node_value, [post: &post_processor/1])
