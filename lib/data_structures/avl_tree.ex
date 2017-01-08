@@ -50,8 +50,10 @@ defmodule Exads.DataStructures.AVLTree do
   end
 
   defp rotate(tree) do
-    if (tree.augmentation.bf < -1) do
-      left_rotation(tree)
+    cond do
+      tree.augmentation.bf < -1 -> left_rotation(tree)
+      tree.augmentation.bf > 1 -> right_rotation(tree)
+      true -> tree |> augment()
     end
   end
 
@@ -61,9 +63,11 @@ defmodule Exads.DataStructures.AVLTree do
     %BST.Node{left: left, right: right, value: tree.right.value} |> augment()
   end
 
-  defp calculate_bf(%BST.Node{left: :leaf, right: :leaf}), do: 0
-  defp calculate_bf(%BST.Node{left: :leaf, right: right}), do: Kernel.abs(right.augmentation.bf)
-  defp calculate_bf(%BST.Node{left: left, right: :leaf}), do: left.augmentation.bf
-  defp calculate_bf(%BST.Node{left: left, right: right}), do: Kernel.abs(left.augmentation.bf - right.augmentation.bf)
+  defp right_rotation(tree) do
+    right = %BST.Node{left: tree.left.right, right: tree.right, value: tree.value} |> augment()
+    left = %BST.Node{left: tree.left.left.left, right: tree.left.left.right, value: tree.left.left.value} |> augment()
+    %BST.Node{left: left, right: right, value: tree.left.value} |> augment()
+  end
+
 
 end
