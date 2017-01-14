@@ -4,6 +4,10 @@ defmodule Exads.DataStructures.AVLTree do
 
   defmodule Augmentation do
 
+    @moduledoc """
+    AVL augmentation struct for BST required to implement AVL Tree
+    """
+
     @type augmentation :: %__MODULE__{height: integer, bf: integer}
     defstruct height: 0, bf: 0
 
@@ -31,29 +35,29 @@ defmodule Exads.DataStructures.AVLTree do
   end
 
   @spec post_processor(BST.Node.bst_node) :: BST.Node.bst_node
-  defp post_processor(node), do: augment(node) |> balance()
+  defp post_processor(bst_node), do: bst_node |> augment() |> balance()
 
 
   @spec augment(BST.Node.bst_node | :leaf) :: BST.Node.bst_node
   defp augment(:leaf), do: :leaf
-  defp augment(%BST.Node{left: :leaf, right: :leaf} = node), do: %{node | augmentation: %Augmentation{}}
-  defp augment(%BST.Node{left: left, right: :leaf} = node) do
-    %{node | augmentation: %Augmentation{height: left.augmentation.height + 1, bf: left.augmentation.height + 1}}
+  defp augment(%BST.Node{left: :leaf, right: :leaf} = bst_node), do: %{bst_node | augmentation: %Augmentation{}}
+  defp augment(%BST.Node{left: left, right: :leaf} = bst_node) do
+    %{bst_node | augmentation: %Augmentation{height: left.augmentation.height + 1, bf: left.augmentation.height + 1}}
   end
-  defp augment(%BST.Node{left: :leaf, right: right} = node) do
-    %{node | augmentation: %Augmentation{height: right.augmentation.height + 1, bf: -1 * right.augmentation.height - 1}}
+  defp augment(%BST.Node{left: :leaf, right: right} = bst_node) do
+    %{bst_node | augmentation: %Augmentation{height: right.augmentation.height + 1, bf: -1 * right.augmentation.height - 1}}
   end
-  defp augment(%BST.Node{left: left, right: right} = node), do:
-    %{node | augmentation: %Augmentation{height:  max(left.augmentation.height, right.augmentation.height) + 1,
-                                         bf:      left.augmentation.height - right.augmentation.height}}
+  defp augment(%BST.Node{left: left, right: right} = bst_node), do:
+    %{bst_node | augmentation: %Augmentation{height:  max(left.augmentation.height, right.augmentation.height) + 1,
+                                             bf:      left.augmentation.height - right.augmentation.height}}
 
 
   @spec balance(BST.Node.bst_node) :: BST.Node.bst_node
-  defp balance(node) do
-    if Kernel.abs(node.augmentation.bf) > 1 do
-      rotate(node)
+  defp balance(bst_node) do
+    if Kernel.abs(bst_node.augmentation.bf) > 1 do
+      rotate(bst_node)
     else
-      node |> augment()
+      bst_node |> augment()
     end
   end
 

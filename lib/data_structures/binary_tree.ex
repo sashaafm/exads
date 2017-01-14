@@ -14,6 +14,11 @@ defmodule Exads.DataStructures.BinarySearchTree do
     @fallback_to_any true
     @dialyzer {:nowarn_function, __protocol__: 1}
 
+    @moduledoc """
+    Comparable definition for BST nodes
+    Needs to be implemented for the value of the BST node
+    """
+
     @doc """
       Implementation of greater for BST comparisons
     """
@@ -43,6 +48,10 @@ defmodule Exads.DataStructures.BinarySearchTree do
 
   defmodule Node do
 
+    @moduledoc """
+    A BST Node
+    """
+
     @type bst_node :: %__MODULE__{value: any, left: :leaf | bst_node, right: :leaf | bst_node, augmentation: any}
     defstruct value: nil, left: :leaf, right: :leaf, augmentation: nil
   end
@@ -51,7 +60,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Implements the identity processor
   """
   @spec identity(Node.bst_node) :: Node.bst_node
-  def identity(node), do: node
+  def identity(bst_node), do: bst_node
 
 
   @doc """
@@ -69,14 +78,20 @@ defmodule Exads.DataStructures.BinarySearchTree do
   """
   @spec insert(Node.bst_node | :leaf, any, [{atom(), (Node.bst_node -> Node.bst_node)}]) :: Node.bst_node
 
-  def insert(node, node_value, processors \\ [])
+  def insert(bst_node, node_value, processors \\ [])
   def insert(:leaf, node_value, processors), do: new(node_value, processors)
   def insert(%Node{value: value, left: left, right: right} = current_node, node_value, processors) do
     processors = Keyword.merge([pre: &identity/1, post: &identity/1], processors)
     if node_value < value do
-      processors[:pre].(current_node) |> (fn node -> %{node | left: insert(left, node_value, processors)} end).() |> processors[:post].()
+      current_node
+        |> processors[:pre].()
+        |> (fn bst_node -> %{bst_node | left: insert(left, node_value, processors)} end).()
+        |> processors[:post].()
     else
-      processors[:pre].(current_node) |> (fn node -> %{node | right: insert(right, node_value, processors)} end).() |> processors[:post].()
+      current_node
+        |> processors[:pre].()
+        |> (fn bst_node -> %{bst_node | right: insert(right, node_value, processors)} end).()
+        |> processors[:post].()
     end
   end
 
@@ -121,16 +136,16 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @spec find_node(Node.bst_node | :leaf, any) :: Node.bst_node | nil
 
   def find_node(:leaf, _), do: nil
-  def find_node(node = %{value: node_value, left: _, right: _},
+  def find_node(bst_node = %{value: node_value, left: _, right: _},
     node_value) do
-    node
+    bst_node
   end
 
-  def find_node(node, node_value) do
-    if node_value < node.value do
-      find_node node.left, node_value
+  def find_node(bst_node, node_value) do
+    if node_value < bst_node.value do
+      find_node bst_node.left, node_value
     else
-      find_node node.right, node_value
+      find_node bst_node.right, node_value
     end
   end
 
@@ -140,17 +155,17 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @spec find_parent(Node.bst_node | :leaf, any) :: Node.bst_node | nil
 
   def find_parent(:leaf, _), do: nil
-  def find_parent(node, node_value) do
-    _ = if node.left != :leaf && node.left.value == node_value do
-      node
+  def find_parent(bst_node, node_value) do
+    _ = if bst_node.left != :leaf && bst_node.left.value == node_value do
+      bst_node
     end
-    if node.right != :leaf && node.right.value == node_value do
-      node
+    if bst_node.right != :leaf && bst_node.right.value == node_value do
+      bst_node
     else
-      if node_value < node.value do
-        find_parent node.left, node_value
+      if node_value < bst_node.value do
+        find_parent bst_node.left, node_value
       else
-        find_parent node.right, node_value
+        find_parent bst_node.right, node_value
       end
     end
   end
@@ -222,15 +237,16 @@ defmodule Exads.DataStructures.BinarySearchTree do
 
 
   defp children(list) do
-    Enum.map(list, fn (x) -> case x do
-        %{left: :leaf, value: _, right: :leaf} -> []
-        %{left: left, value: _, right: :leaf} -> left
-        %{left: :leaf, value: _, right: right} -> right
-        %{left: left, value: _, right: right} -> [left, right]
-        _ -> []
-      end
-    end)
-    |> List.flatten
+    list
+      |> Enum.map(fn (x) -> case x do
+            %{left: :leaf, value: _, right: :leaf} -> []
+            %{left: left, value: _, right: :leaf} -> left
+            %{left: :leaf, value: _, right: right} -> right
+            %{left: left, value: _, right: right} -> [left, right]
+            _ -> []
+          end
+        end)
+      |> List.flatten
   end
 
   @doc """
@@ -240,7 +256,9 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @spec breadth_first_search(Node.bst_node) :: nonempty_list(any)
 
   def breadth_first_search(tree) do
-    bfs([tree]) |> Enum.map(fn (x) -> x.value end)
+    [tree]
+      |> bfs()
+      |> Enum.map(fn (x) -> x.value end)
   end
 
   defp bfs([]), do: []
