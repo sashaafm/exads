@@ -42,7 +42,7 @@ defmodule Exads.DataStructures.AVLTree do
   defp post_processor(bst_node), do: bst_node |> augment() |> balance()
 
 
-  @spec augment(BST.Node.bst_node | :leaf) :: BST.Node.bst_node
+  @spec augment(BST.Node.bst_node | :leaf) :: BST.Node.bst_node | :leaf
   defp augment(:leaf), do: :leaf
   defp augment(%BST.Node{left: :leaf, right: :leaf} = bst_node), do: %{bst_node | augmentation: %Augmentation{}}
   defp augment(%BST.Node{left: left, right: :leaf} = bst_node) do
@@ -56,7 +56,7 @@ defmodule Exads.DataStructures.AVLTree do
                                              bf:      left.augmentation.height - right.augmentation.height}}
 
 
-  @spec balance(BST.Node.bst_node) :: BST.Node.bst_node
+  @spec balance(BST.Node.bst_node | :leaf) :: BST.Node.bst_node | :leaf
   defp balance(:leaf), do: :leaf
   defp balance(bst_node) do
     if Kernel.abs(bst_node.augmentation.bf) > 1 do
