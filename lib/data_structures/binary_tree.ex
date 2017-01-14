@@ -99,30 +99,35 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Removes a node with 'node_value' from the given 'tree'. Returns :leaf if the
   node does not exist.
   """
-  @spec delete_node(Node.bst_node, any) :: Node.bst_node | nil
+  @spec delete_node(Node.bst_node, any, [{atom(), (Node.bst_node -> Node.bst_node)}]) :: Node.bst_node | nil
 
-  def delete_node(tree, node_value) do
+  def delete_node(tree, node_value, processors \\ []) do
     if exists?(tree, node_value) do
-      delete tree, node_value
+      processors = Keyword.merge([pre: &identity/1, post: &identity/1], processors)
+      delete tree, node_value, processors
     else
       nil
     end
   end
 
-  defp delete(tree, node_value) do
+  defp delete(tree, node_value, processors) do
     cond do
-      tree.value == node_value -> del(tree)
+      tree.value == node_value -> del(tree, processors)
       tree.value <  node_value ->
-        %Node{tree | right: delete(tree.right, node_value)}
+        delete(tree.right, node_value, processors)
+          |> (fn bst_node -> %Node{tree | right: bst_node} end).()
+          |> processors[:post].()
       tree.value > node_value ->
-        %Node{tree | left: delete(tree.left,node_value)}
+        delete(tree.left, node_value, processors)
+          |> (fn bst_node -> %Node{tree | left: bst_node} end).()
+          |> processors[:post].()
     end
   end
 
-  defp del(%Node{left: :leaf,  value: _, right: right}), do: right
-  defp del(%Node{left: left, value: _, right: :leaf}),   do: left
-  defp del(%Node{left: _, value: _, right: right} = current_node) do
-    %{current_node | value: min(right), right: delete(right, min(right))}
+  defp del(%Node{left: :leaf,  value: _, right: right}, _), do: right
+  defp del(%Node{left: left, value: _, right: :leaf}, _),   do: left
+  defp del(%Node{left: _, value: _, right: right} = current_node, processors) do
+    %{current_node | value: min(right), right: delete(right, min(right), processors)}
   end
 
   defp min(%Node{left: :leaf,  value: val, right: _}), do: val
