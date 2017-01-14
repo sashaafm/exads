@@ -114,11 +114,13 @@ defmodule Exads.DataStructures.BinarySearchTree do
     cond do
       tree.value == node_value -> del(tree, processors)
       tree.value <  node_value ->
-        delete(tree.right, node_value, processors)
+        tree.right
+          |> delete(node_value, processors)
           |> (fn bst_node -> %Node{tree | right: bst_node} end).()
           |> processors[:post].()
       tree.value > node_value ->
-        delete(tree.left, node_value, processors)
+        tree.left
+          |> delete(node_value, processors)
           |> (fn bst_node -> %Node{tree | left: bst_node} end).()
           |> processors[:post].()
     end
@@ -127,7 +129,9 @@ defmodule Exads.DataStructures.BinarySearchTree do
   defp del(%Node{left: :leaf,  value: _, right: right}, _), do: right
   defp del(%Node{left: left, value: _, right: :leaf}, _),   do: left
   defp del(%Node{left: _, value: _, right: right} = current_node, processors) do
-    %{current_node | value: min(right), right: delete(right, min(right), processors)}
+      current_node
+        |> (fn bst_node -> %{bst_node | value: min(right), right: delete(right, min(right), processors)} end).()
+        |> processors[:post].()
   end
 
   defp min(%Node{left: :leaf,  value: val, right: _}), do: val

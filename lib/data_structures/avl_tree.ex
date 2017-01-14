@@ -34,6 +34,10 @@ defmodule Exads.DataStructures.AVLTree do
     BST.insert(tree, node_value, [post: &post_processor/1])
   end
 
+  def delete_node(tree, node_value) do
+    BST.delete_node(tree, node_value, [post: &post_processor/1])
+  end
+
   @spec post_processor(BST.Node.bst_node) :: BST.Node.bst_node
   defp post_processor(bst_node), do: bst_node |> augment() |> balance()
 
@@ -53,6 +57,7 @@ defmodule Exads.DataStructures.AVLTree do
 
 
   @spec balance(BST.Node.bst_node) :: BST.Node.bst_node
+  defp balance(:leaf), do: :leaf
   defp balance(bst_node) do
     if Kernel.abs(bst_node.augmentation.bf) > 1 do
       rotate(bst_node)

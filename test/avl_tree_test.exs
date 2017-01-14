@@ -153,6 +153,73 @@ defmodule Exads.DataStructures.AVLTreeTest do
     end
   end
 
+  describe "delete" do
+
+    test "delete node with a single child and rotation required", %{tree: tree} do
+      assert tree |> AVL.insert(1) |> AVL.delete_node(12) ==
+        %BST.Node{left:         %BST.Node{left:         :leaf,
+                                          right:        :leaf,
+                                          value:        1,
+                                          augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                  right:        %BST.Node{left:         :leaf,
+                                          right:        :leaf,
+                                          value:        6,
+                                          augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                  value: 3,
+                  augmentation: %AVL.Augmentation{height: 1, bf: 0}}
+    end
+
+    test "delete node with left- and right child and rotation required", %{tree: tree} do
+      assert tree
+          |> AVL.insert(2)
+          |> AVL.insert(4)
+          |> AVL.insert(10)
+          |> AVL.insert(18)
+          |> AVL.insert(1)
+          |> AVL.insert(9)
+          |> AVL.insert(16)
+          |> AVL.insert(19)
+          |> AVL.insert(20)
+          |> AVL.delete_node(12)
+        ==
+        %BST.Node{left:         %BST.Node{left:         %BST.Node{left:         %BST.Node{left:         :leaf,
+                                                                                          right:        :leaf,
+                                                                                          value:        1,
+                                                                                          augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                                                  right:    :leaf,
+                                                                  value:    2,
+                                                                  augmentation: %AVL.Augmentation{height: 1, bf: 1}},
+                                          right:        %BST.Node{left:         :leaf,
+                                                                  right:        :leaf,
+                                                                  value:        4,
+                                                                  augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                          value:        3,
+                                          augmentation: %AVL.Augmentation{height: 2, bf: 1}},
+                  right:        %BST.Node{left:         %BST.Node{left:         %BST.Node{left:         :leaf,
+                                                                                          right:        :leaf,
+                                                                                          value:        9,
+                                                                                          augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                                                  right:        :leaf,
+                                                                  value:        10,
+                                                                  augmentation: %AVL.Augmentation{height: 1, bf: 1}},
+                                          right:        %BST.Node{left:         %BST.Node{left:         :leaf,
+                                                                                          right:        :leaf,
+                                                                                          value:        18,
+                                                                                          augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                                                  right:        %BST.Node{left:         :leaf,
+                                                                                          right:        :leaf,
+                                                                                          value:        20,
+                                                                                          augmentation: %AVL.Augmentation{height: 0, bf: 0}},
+                                                                  value:        19,
+                                                                  augmentation: %AVL.Augmentation{height: 1, bf: 0}},
+                                          value:        16,
+                                          augmentation: %AVL.Augmentation{height: 2, bf: 0}},
+                  value: 6,
+                  augmentation: %AVL.Augmentation{height: 3, bf: 0}}
+    end
+
+  end
+
 
 
 end
