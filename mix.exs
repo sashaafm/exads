@@ -20,7 +20,7 @@ defmodule Exads.Mixfile do
 
   # Configuration of the `dialyxir`-package
   def dialyzer do
-    [plt_file: "./plt/.local.plt"]
+    []
   end
 
   # Dependencies can be Hex packages:
