@@ -55,7 +55,7 @@ defmodule BinarySearchTreeTest do
       value: 2}
   end
 
-  test "delete existing node right side with left children", tree do
+  test "delete existing node right side with left children" do
     tree = BST.new(6) |> BST.insert(1) |> BST.insert(12) |> BST.insert(8) |> BST.insert(9)
     assert BST.delete_node(tree, 12) ==
     %{left:   %{left:   :leaf,
