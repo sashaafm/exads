@@ -6,6 +6,7 @@
 /cover
 /deps
 /plt/.local.plt
+/plt/.local.plt.hash
 erl_crash.dump
 *.ez
 
