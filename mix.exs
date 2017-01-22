@@ -20,7 +20,7 @@ defmodule Exads.Mixfile do
 
   # Configuration of the `dialyxir`-package
   def dialyzer do
-    []
+    [plt_file: {:no_warn, "./plt/.local.plt"}]
   end
 
   # Dependencies can be Hex packages:
@@ -37,8 +37,8 @@ defmodule Exads.Mixfile do
       {:dialyxir, "~> 0.4", only: :dev},
       {:ex_doc, "~> 0.14", only: :dev},
       {:earmark, "~> 1.0", only: :dev},
-      {:inch_ex, "~> 0.5", only: [:dev, :test]},
-      {:credo, "~> 0.5", only: [:dev, :test]},
+      {:inch_ex, "~> 0.5", only: :dev},
+      {:credo, "~> 0.5", only: :dev},
     ]
   end
 end
