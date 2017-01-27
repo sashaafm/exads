@@ -7,8 +7,8 @@ defmodule Exads.Mixfile do
      elixir: "~> 1.1-dev",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps,
-     dialyzer: dialyzer]
+     deps: deps(),
+     dialyzer: dialyzer()]
   end
 
   # Configuration for the OTP application
@@ -20,7 +20,7 @@ defmodule Exads.Mixfile do
 
   # Configuration of the `dialyxir`-package
   def dialyzer do
-    [plt_file: "./plt/.local.plt"]
+    [plt_file: {:no_warn, "./plt/.local.plt"}]
   end
 
   # Dependencies can be Hex packages:
@@ -34,11 +34,11 @@ defmodule Exads.Mixfile do
   # Type `mix help deps` for more examples and options
   defp deps do
     [
-      {:dialyxir, "~> 0.3.3", only: :dev},
-      {:ex_doc, "~> 0.11", only: :dev},
-      {:earmark, "~> 0.1", only: :dev},
-      {:inch_ex, "~> 0.5", only: [:dev, :test]},
-      {:credo, "~> 0.3", only: [:dev, :test]},
+      {:dialyxir, "~> 0.4", only: :dev},
+      {:ex_doc, "~> 0.14", only: :dev},
+      {:earmark, "~> 1.0", only: :dev},
+      {:inch_ex, "~> 0.5", only: :dev},
+      {:credo, "~> 0.5", only: :dev},
     ]
   end
 end

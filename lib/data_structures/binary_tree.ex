@@ -5,10 +5,12 @@ defmodule Exads.DataStructures.BinarySearchTree do
   using Map.
   """
 
+  @type bst_node :: %{value: any, left: :leaf | %{}, right: :leaf | %{}}
+
   @doc """
   Creates a new Binary Search Tree with the root's value as the given 'value'.
   """
-  @spec new(any) :: %{}
+  @spec new(any) :: %{value: any, left: :leaf, right: :leaf}
 
   def new(value) do
     %{value: value, left: :leaf, right: :leaf}
@@ -17,7 +19,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @doc """
   Creates and inserts a node with its value as 'node_value' into the tree.
   """
-  @spec insert(%{} | :leaf, any) :: %{}
+  @spec insert(bst_node | :leaf, any) :: bst_node
 
   def insert(:leaf, node_value), do: new node_value
   def insert(%{value: value, left: left, right: right}, node_value) do
@@ -32,7 +34,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Removes a node with 'node_value' from the given 'tree'. Returns :leaf if the
   node does not exist.
   """
-  @spec delete_node(%{}, any) :: %{} | nil
+  @spec delete_node(bst_node, any) :: bst_node | nil
 
   def delete_node(tree, node_value) do
     if exists?(tree, node_value) do
@@ -110,7 +112,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @doc """
   Finds the depth of the node with the given 'node_value'.
   """
-  @spec node_depth(%{} | nil, any) :: integer
+  @spec node_depth(bst_node | nil, any) :: integer
 
   def node_depth(tree, node_value), do: nd tree, node_value, 0
 
@@ -128,7 +130,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   @doc """
   Finds the height of the given 'tree'.
   """
-  @spec tree_height(%{}) :: integer
+  @spec tree_height(bst_node) :: integer
 
   def tree_height(tree) do
     tree
@@ -151,7 +153,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   returned in a list. The order of the search is passed into 'order' using
   the atoms ':in_order', ':pre_order' or ':post_order'
   """
-  @spec depth_first_search(%{}, atom) :: list(any)
+  @spec depth_first_search(bst_node, atom) :: list(any)
 
   def depth_first_search(tree, order) when order == :pre_order or
     order == :in_order  or
@@ -189,7 +191,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Performs a Breadth-First Search in the given 'tree'. The nodes' values are
   returned as a list.
   """
-  @spec breadth_first_search(%{}) :: nonempty_list(any)
+  @spec breadth_first_search(bst_node) :: nonempty_list(any)
 
   def breadth_first_search(tree) do
     bfs([tree]) |> Enum.map(fn (x) -> x.value end)
@@ -204,7 +206,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Returns true if a node with the given 'node_value' exists in the 'tree' or
   false otherwise.
   """
-  @spec exists?(%{}, any) :: boolean
+  @spec exists?(bst_node, any) :: boolean
 
   def exists?(tree, node_value) do
     e tree, node_value
@@ -224,7 +226,7 @@ defmodule Exads.DataStructures.BinarySearchTree do
   Returns how many occurrences of the given 'node_value' are inside the
   'tree'.
   """
-  @spec how_many?(%{}, any) :: pos_integer
+  @spec how_many?(bst_node, any) :: pos_integer
 
   def how_many?(tree, node_value) do
     d tree, node_value, 0

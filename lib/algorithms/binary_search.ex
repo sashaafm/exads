@@ -14,7 +14,7 @@ defmodule Exads.Algorithms.BinarySearch do
   end
 
   defp bs([], _, _, _), do: nil
-  defp bs([val], _, _, _), do: 0
+  defp bs([_], _, _, _), do: 0
   defp bs(_, _, min, max) when max < min, do: nil
   defp bs(array, key, min, max) do
     mid      = div min + max, 2

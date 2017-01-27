@@ -75,7 +75,7 @@ defmodule StackTest do
   # I do think, "letting it crash" with an `ArgumentError` or a
   # `FunctionClauseError` were more Elixir style.
   test "non-empty? with wrong type" do
-    assert_raise Protocol.UndefinedError, fn -> S.empty?("hello") end
+    assert_raise FunctionClauseError, fn -> S.empty?("hello") end
   end
 
   test "top with empty stack" do
