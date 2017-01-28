@@ -13,7 +13,7 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> new
+      iex> new()
       #Stack<[]>
   """
   @spec new() :: t
@@ -30,7 +30,7 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> new === from_list([])
+      iex> new() === from_list([])
       true
 
       iex> from_list([1,2,3])
@@ -51,7 +51,7 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> a = new |> push(0)
+      iex> a = new() |> push(0)
       #Stack<[0]>
       iex> a |> push(1)
       #Stack<[1, 0]>
@@ -76,10 +76,10 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> new |> pop
+      iex> new() |> pop
       nil
 
-      iex> new |> push(1) |> pop |> inspect
+      iex> new() |> push(1) |> pop |> inspect
       "{1, #Stack<[]>}"
   """
   @spec pop(t(a)) :: {a, t(a)} | nil when a: var
@@ -98,7 +98,7 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> new |> delete
+      iex> new() |> delete
       nil
 
       iex> [1,2,3] |> from_list |> delete
@@ -122,13 +122,13 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> new |> push(1) |> empty?
+      iex> new() |> push(1) |> empty?
       false
 
-      iex> new |> empty?
+      iex> new() |> empty?
       true
 
-      iex> new |> push(1) |> delete |> empty?
+      iex> new() |> push(1) |> delete |> empty?
       true
   """
   @spec empty?(t) :: boolean
@@ -146,10 +146,10 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> new |> top
+      iex> new() |> top
       nil
 
-      iex> new |> push(1) |> top
+      iex> new() |> push(1) |> top
       1
   """
   @spec top(t(a)) :: a | nil when a: var
@@ -189,7 +189,7 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> member?(new, 0)
+      iex> member?(new(), 0)
       false
 
       iex> member?(from_list([1,2,3]), 2.0)
@@ -217,7 +217,7 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> position(new, 0)
+      iex> position(new(), 0)
       nil
 
       iex> position(from_list([1,2,3]), 2.0)
@@ -244,7 +244,7 @@ defmodule Exads.DataStructures.Stack do
 
   ## Example
 
-      iex> more_than_once(new, 0)
+      iex> more_than_once(new(), 0)
       false
 
       iex> more_than_once(from_list([1,2,3,1]), 1)

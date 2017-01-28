@@ -63,9 +63,10 @@ defmodule Exads.DataStructures.PriorityQueue do
     {_, front_elem} = queue
                       |> Enum.group_by(fn {_, prio} -> prio end)
                       |> Map.to_list
-                      |> List.last
+                      |> Enum.sort(fn ({prio, _}, {prio_compare, _}) ->  prio >= prio_compare end)
+                      |> List.first
 
-    {List.last(front_elem), queue -- [List.last(front_elem)]}
+    {List.first(front_elem), queue -- [List.first(front_elem)]}
   end
 
   @doc """
