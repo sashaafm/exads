@@ -34,6 +34,10 @@ defmodule Exads.DataStructures.AVLTree do
     BST.insert(tree, node_value, [post: &post_processor/1])
   end
 
+  @doc """
+  Deletes the node with the given node value from the tree
+  """
+
   def delete_node(tree, node_value) do
     BST.delete_node(tree, node_value, [post: &post_processor/1])
   end
