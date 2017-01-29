@@ -3,21 +3,32 @@ defmodule BinarySearchTreeTest do
   alias Exads.DataStructures.BinarySearchTree, as: BST
   doctest Exads
 
+  defmodule ComplexTestValue do
+    defstruct key: 0, value: ""
+  end
+
+  defimpl BST.Comparable, for: ComplexTestValue do
+    import Kernel, except: [{:>, 2}, {:<, 2}]
+
+    def left > right, do: Kernel.>(left.key, right.key)
+    def left < right, do: Kernel.<(left.key, right.key)
+  end
+
   setup do
     {:ok, tree: BST.new(2) |> BST.insert(1) |> BST.insert(3)}
   end
 
   test "new BST" do
-    assert BST.new(2) == %{left: :leaf, right: :leaf, value: 2}
+    assert BST.new(2) == %BST.Node{left: :leaf, right: :leaf, value: 2}
   end
 
   test "insert value in BST rightside", tree do
     assert BST.insert(tree[:tree], 5) ==
-      %{left: %{left: :leaf,
+      %BST.Node{left: %BST.Node{left: :leaf,
                 right: :leaf,
                 value: 1},
-        right: %{left: :leaf,
-                 right: %{left: :leaf,
+        right: %BST.Node{left: :leaf,
+                 right: %BST.Node{left: :leaf,
                           right: :leaf,
                           value: 5 },
                  value: 3},
@@ -26,20 +37,30 @@ defmodule BinarySearchTreeTest do
 
   test "insert value in BST leftside", tree do
     assert BST.insert(tree[:tree], 0) ==
-      %{left:  %{left:  %{left:  :leaf,
+      %BST.Node{left:  %BST.Node{left:  %BST.Node{left:  :leaf,
                           right: :leaf,
                           value: 0},
                  right: :leaf,
                  value: 1},
-        right: %{left:  :leaf,
+        right: %BST.Node{left:  :leaf,
                  right: :leaf,
                  value: 3},
         value: 2}
   end
 
+  test "insert complex value in BST" do
+    assert BST.new(%ComplexTestValue{key: 6}) |> BST.insert(%ComplexTestValue{key: 1}) ==
+      %BST.Node{left:   %BST.Node{left:    :leaf,
+                                 right:   :leaf,
+                                 value:   %ComplexTestValue{key: 1}},
+                right:  :leaf,
+                value:  %ComplexTestValue{key: 6}}
+
+  end
+
   test "delete existing node in BST rightside", tree do
     assert BST.delete_node(tree[:tree], 3) ==
-      %{left:  %{left:  :leaf,
+      %BST.Node{left:  %BST.Node{left:  :leaf,
                 right: :leaf,
                 value: 1},
         right: :leaf,
@@ -48,8 +69,8 @@ defmodule BinarySearchTreeTest do
 
   test "delete existing node in BST leftside", tree do
     assert BST.delete_node(tree[:tree], 1) ==
-    %{left:  :leaf,
-      right: %{left:  :leaf,
+    %BST.Node{left:  :leaf,
+      right: %BST.Node{left:  :leaf,
                right: :leaf,
                value: 3},
       value: 2}
@@ -58,11 +79,11 @@ defmodule BinarySearchTreeTest do
   test "delete existing node right side with left children" do
     tree = BST.new(6) |> BST.insert(1) |> BST.insert(12) |> BST.insert(8) |> BST.insert(9)
     assert BST.delete_node(tree, 12) ==
-    %{left:   %{left:   :leaf,
+    %BST.Node{left:   %BST.Node{left:   :leaf,
                 right:  :leaf,
                 value:  1},
-      right:  %{left:   :leaf,
-                right:  %{left:   :leaf,
+      right:  %BST.Node{left:   :leaf,
+                right:  %BST.Node{left:   :leaf,
                           right:  :leaf,
                           value:  9},
                 value:  8},
@@ -75,7 +96,7 @@ defmodule BinarySearchTreeTest do
 
   test "find existing node", tree do
     assert BST.find_node(tree[:tree], 3) ==
-      %{left: :leaf, right: :leaf, value: 3}
+      %BST.Node{left: :leaf, right: :leaf, value: 3}
   end
 
   test "find non-existing node", tree do
@@ -84,10 +105,10 @@ defmodule BinarySearchTreeTest do
 
   test "find existing node's parent", tree do
     assert BST.find_parent(tree[:tree], 3) ==
-      %{left:  %{left:  :leaf,
+      %BST.Node{left:  %BST.Node{left:  :leaf,
                 right: :leaf,
                 value: 1},
-        right: %{left:  :leaf,
+        right: %BST.Node{left:  :leaf,
                 right: :leaf,
                 value: 3},
         value: 2}
